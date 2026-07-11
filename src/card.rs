@@ -83,3 +83,51 @@ impl Deck {
         self.current.pop()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn deck_new_test() {
+        let deck = Deck::new();
+        assert!(deck.full.len() == 52, "Full deck length should be 52");
+        assert!(
+            deck.current.len() == 52,
+            "Current deck length should start as 52"
+        );
+        assert!(deck.full != deck.current, "Current deck should be shuffled");
+    }
+
+    #[test]
+    fn deck_pop() {
+        let mut deck = Deck::new();
+        assert!(deck.full.len() == 52, "Full deck length should be 52");
+        assert!(
+            deck.current.len() == 52,
+            "Current deck length should start as 52"
+        );
+        assert!(deck.full != deck.current, "Current deck should be shuffled");
+        let mut popped_cards = Vec::with_capacity(52);
+        for i in 1..=52 {
+            popped_cards.push(deck.pop());
+            assert!(
+                deck.full.len() == 52,
+                "Full deck length should not be changed by pop"
+            );
+            assert!(
+                deck.current.len() == 52 - i,
+                "Current deck length should be {} after popping {} times",
+                52 - i,
+                i
+            );
+        }
+        // Double check current deck is empty
+        assert!(deck.full.len() == 52, "Full deck length should not be changed after popping");
+        assert!(deck.current.len() == 0, "Current deck length should be 0");
+        // Double check that reset works
+        deck.reset();
+        assert!(deck.full.len() == 52, "Full deck length should still be 52 after resetting");
+        assert!(deck.current.len() == 52, "Current deck length should be 52 again after resetting");
+    }
+}
