@@ -102,11 +102,20 @@ pub mod all_cards_backwards {
     impl AllCardsBackwards {
         pub fn new() -> Self {
             AllCardsBackwards {
-                iter: Box::new(SUITS.clone().into_iter().rev().map(
-                    |suit| RANKS.clone().into_iter().rev().map(
-                        move |rank| Card{rank, suit}
-                    )
-                ).flatten()),
+                iter: Box::new(
+                    SUITS
+                        .clone()
+                        .into_iter()
+                        .rev()
+                        .map(|suit| {
+                            RANKS
+                                .clone()
+                                .into_iter()
+                                .rev()
+                                .map(move |rank| Card { rank, suit })
+                        })
+                        .flatten(),
+                ),
             }
         }
     }
