@@ -134,3 +134,50 @@ impl Game {
         self.remove_cards();
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::card::all_cards_backwards::AllCardsBackwards;
+
+    #[test]
+    fn game_draw_card_test() {
+        let mut game = Game::new();
+        game.deck.reset_to_sorted();
+        assert_eq!(game.hand.len(), 0, "Game hand should start as empty");
+        assert_eq!(
+            game.finished, false,
+            "Game `finished` field should start as `false`",
+        );
+        // draw each card in the deck in turn
+        let mut hand_size: usize = 0;
+        for card in AllCardsBackwards::new() {
+            println!("{card:?}");
+            hand_size += 1;
+            game.draw_card();
+            assert_eq!(
+                game.hand.len(),
+                hand_size,
+                "Game hand should have a length of {hand_size}"
+            );
+            assert_eq!(
+                game.hand[hand_size - 1],
+                card,
+                "Drawn Card number {hand_size} should be {card:?}",
+            );
+        }
+        // check that game has not yet been marked as finished
+        assert_eq!(
+            game.finished, false,
+            "Game `finished` field should still be `false`",
+        );
+        // double check that hand is the correct length
+        assert_eq!(game.hand.len(), 52, "Game hand should end with full deck");
+        // draw card when no cards left in the deck
+        game.draw_card();
+        assert_eq!(
+            game.finished, true,
+            "Game `finished` field should be `true` after attempting to draw from an empty deck",
+        );
+    }
+}

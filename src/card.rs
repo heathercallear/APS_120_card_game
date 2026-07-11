@@ -85,6 +85,42 @@ impl Deck {
 }
 
 #[cfg(test)]
+impl Deck {
+    pub fn reset_to_sorted(&mut self) {
+        self.current.clear();
+        self.current.extend(&self.full);
+    }
+}
+
+#[cfg(test)]
+pub mod all_cards_backwards {
+    use super::*;
+    pub struct AllCardsBackwards {
+        iter: Box<dyn Iterator<Item = Card>>,
+    }
+
+    impl AllCardsBackwards {
+        pub fn new() -> Self {
+            AllCardsBackwards {
+                iter: Box::new(SUITS.clone().into_iter().rev().map(
+                    |suit| RANKS.clone().into_iter().rev().map(
+                        move |rank| Card{rank, suit}
+                    )
+                ).flatten()),
+            }
+        }
+    }
+
+    impl Iterator for AllCardsBackwards {
+        type Item = Card;
+
+        fn next(&mut self) -> Option<Self::Item> {
+            self.iter.next()
+        }
+    }
+}
+
+#[cfg(test)]
 mod tests {
     use super::*;
 
