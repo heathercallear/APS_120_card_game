@@ -1,27 +1,27 @@
 use crate::card::{Card, Deck};
 
 /// Struct to handle the playing of the deterministic card game.
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```
 /// use deterministic_card_game::Game;
-/// 
+///
 /// let mut game = Game::new();
-/// 
+///
 /// game.play_games(100);
-/// 
+///
 /// // Index `results` by the number of cards left at the end of a game
 /// //   to get the number of games that have ended that way.
 /// assert_eq!(game.results.len(), 53);
-/// 
+///
 /// // Index `get_results_proportion()` by the number of cards left at the end of a game
 /// //   to get the proportion of games that have ended that way.
 /// assert_eq!(game.get_results_proportion().len(), 53);
-/// 
+///
 /// // Use `total_runs` to check how many times the games has been played.
 /// assert_eq!(game.total_runs, 100);
-/// 
+///
 /// // Use `reset_results` to reset the results and total runs.
 /// game.reset_results();
 /// assert_eq!(game.results, [0; 53]);
@@ -38,7 +38,7 @@ pub struct Game {
 
 impl Game {
     /// Make a new game.
-    /// 
+    ///
     /// Note that only a single instance of `Game` is required to play multiple games.
     pub fn new() -> Self {
         Game {
@@ -60,7 +60,7 @@ impl Game {
     }
 
     /// Play a single game
-    /// 
+    ///
     /// Returns the number of cards left in the hand at the end of the game.
     pub fn play_game(&mut self) -> usize {
         self.reset();
@@ -74,12 +74,12 @@ impl Game {
     }
 
     /// Play `n` games
-    /// 
+    ///
     /// Records the result (number of cards left in the hand at the end of a game)
     /// of each game played in `results` field.
-    /// 
+    ///
     /// The number of times the game has been played is recorded in the `total_runs` field.
-    /// 
+    ///
     /// Note that calling this multiple times with smaller `n` is equivalent to
     /// calling this once with a larger `n` (that is equal to the sum of the smaller `n`s).
     pub fn play_games(&mut self, n: usize) {
@@ -96,18 +96,18 @@ impl Game {
     }
 
     /// Get the results of all played games as a proportion.
-    /// 
+    ///
     /// Returns a vector of the proportion of times a played game
     /// has ended with each number of cards in the hand.
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// The proportion of times a played game has ended
     /// with no (0) cards in the hand would be:
-    /// 
+    ///
     /// ```
     /// use deterministic_card_game::Game;
-    /// 
+    ///
     /// let mut game = Game::new();
     /// game.play_games(100);
     /// println!("Proportion of games won: {}", game.get_results_proportion()[0]);
@@ -125,9 +125,9 @@ impl Game {
     }
 
     /// Draw a card off the deck into the hand.
-    /// 
+    ///
     /// Does not return a card, just alters `deck` and `hand` fields.
-    /// 
+    ///
     /// If the deck is already empty, sets the `finished` field to `true``
     fn draw_card(&mut self) {
         if let Some(card) = self.deck.pop() {
@@ -139,9 +139,9 @@ impl Game {
     }
 
     /// Ensure hand has at least 4 cards, or game marked as finished
-    /// 
+    ///
     /// If the hand has less than 4 cards, draw cards until it has 4 cards.
-    /// 
+    ///
     /// If the deck becomes empty, the hand may have less than 4 cards still.
     /// In this case, the `finished` field will be set to `true`.
     fn ensure_four_cards(&mut self) {
@@ -206,7 +206,7 @@ impl Game {
     }
 
     /// Play a single turn of the game.
-    /// 
+    ///
     /// Draws a new card and then removes cards from the hand if possible.
     fn play_turn(&mut self) {
         self.draw_card();
