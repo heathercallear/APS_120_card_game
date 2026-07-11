@@ -5,6 +5,7 @@ pub struct Game {
     hand: Vec<Card>,
     finished: bool,
     pub results: [usize; 53],
+    pub total_runs: usize,
 }
 
 impl Game {
@@ -16,6 +17,7 @@ impl Game {
             // array if number of times a game has had a certain result
             // index with the number of cards remaining in the hand at the end of the game
             results: [0; 53],
+            total_runs: 0,
         }
     }
 
@@ -38,12 +40,23 @@ impl Game {
 
     pub fn play_games(&mut self, n: usize) {
         for _ in 0..n {
-            self.results[self.play_game()] += 1
+            self.results[self.play_game()] += 1;
+            self.total_runs += 1;
         }
     }
 
     pub fn reset_results(&mut self) {
         self.results = [0; 53];
+        self.total_runs = 0;
+    }
+
+    pub fn get_results_proportion(&self) -> Vec<f64> {
+        let mut results_proportion = Vec::with_capacity(53);
+        let total_runs = self.total_runs as f64;
+        for result in self.results {
+            results_proportion.push(result as f64 / total_runs);
+        }
+        results_proportion
     }
 
     fn draw_card(&mut self) {
