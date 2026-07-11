@@ -52,7 +52,10 @@ impl Game {
 
     pub fn get_results_proportion(&self) -> Vec<f64> {
         let mut results_proportion = Vec::with_capacity(53);
-        let total_runs = self.total_runs as f64;
+        let total_runs = match self.total_runs {
+            0 => 1f64,
+            _ => self.total_runs as f64,
+        };
         for result in self.results {
             results_proportion.push(result as f64 / total_runs);
         }
