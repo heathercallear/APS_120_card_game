@@ -51,7 +51,7 @@ pub struct Card {
 
 pub struct Deck {
     full: Vec<Card>,
-    pub current: Vec<Card>,
+    current: Vec<Card>,
     rng: rand::rngs::ThreadRng,
 }
 
