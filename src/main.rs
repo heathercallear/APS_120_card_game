@@ -11,11 +11,14 @@ fn main() {
         game.play_games(already_ran * 9);
         already_ran *= 10;
         // convert results array items to "0" if 0, else scientific notation
-        let mut results_proportion_str = String::from_iter(
-            game.get_results_proportion().iter().map(
-                |f| if *f == 0f64 {format!("{f}, ")} else {format!("{:.5e}, ", f)}
-            )
-        );
+        let mut results_proportion_str =
+            String::from_iter(game.get_results_proportion().iter().map(|f| {
+                if *f == 0f64 {
+                    format!("{f}, ")
+                } else {
+                    format!("{:.5e}, ", f)
+                }
+            }));
         // removing trailing commma and space
         results_proportion_str.pop();
         results_proportion_str.pop();
