@@ -15,13 +15,14 @@ impl Game {
         }
     }
 
-    pub fn reset(&mut self) {
+    fn reset(&mut self) {
         self.deck.reset();
         self.hand.clear();
         self.finished = false;
     }
 
     pub fn play_game(&mut self) -> usize {
+        self.reset();
         // deal first four cards
         self.ensure_four_cards();
         self.remove_cards();

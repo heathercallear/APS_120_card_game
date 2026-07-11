@@ -5,7 +5,6 @@ fn main() {
     let mut result: usize;
 
     for _ in 0..10 {
-        game.reset();
         result = game.play_game();
         if result == 0 {
             println!("Game won!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
