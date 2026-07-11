@@ -86,6 +86,7 @@ impl Deck {
 
 #[cfg(test)]
 impl Deck {
+    /// Set hand to be the same as a full sorted deck.
     pub fn reset_to_sorted(&mut self) {
         self.current.clear();
         self.current.extend(&self.full);
