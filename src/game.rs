@@ -259,4 +259,72 @@ mod tests {
             "Game `finished` field should be `true` after attempting to draw from an empty deck",
         );
     }
+
+    #[test]
+    fn ensure_four_cards_test() {
+        let mut game = Game::new();
+        game.deck.reset_to_sorted();
+
+        assert_eq!(game.hand.len(), 0, "Hand should start off empty");
+        // try from an empty hand
+        game.ensure_four_cards();
+        assert_eq!(game.hand.len(), 4, "Hand should now have 4 cards");
+        // try from a 4 card hand
+        let old_hand = game.hand.clone();
+        game.ensure_four_cards();
+        assert_eq!(
+            game.hand, old_hand,
+            "Hand should not be changed when it has 4 cards already"
+        );
+        // try from a 3 card hand
+        game.hand.pop();
+        assert_eq!(game.hand.len(), 3, "Hand should now have 3 cards");
+        game.ensure_four_cards();
+        assert_eq!(game.hand.len(), 4, "Hand should now have 4 cards");
+        assert_eq!(
+            game.hand[..3],
+            old_hand[..3],
+            "First 3 cards in hand should not have changed"
+        );
+        // try from a 2 card hand
+        game.hand.pop();
+        game.hand.pop();
+        assert_eq!(game.hand.len(), 2, "Hand should now have 2 cards");
+        game.ensure_four_cards();
+        assert_eq!(game.hand.len(), 4, "Hand should now have 4 cards");
+        assert_eq!(
+            game.hand[..2],
+            old_hand[..2],
+            "First 2 cards in hand should not have changed"
+        );
+        // try from a 1 card hand
+        game.hand.pop();
+        game.hand.pop();
+        game.hand.pop();
+        assert_eq!(game.hand.len(), 1, "Hand should now have 3 cards");
+        game.ensure_four_cards();
+        assert_eq!(game.hand.len(), 4, "Hand should now have 4 cards");
+        assert_eq!(
+            game.hand[..1],
+            old_hand[..1],
+            "First card in hand should not have changed"
+        );
+
+        // check marking of game as finished
+
+        game.reset();
+        for _ in 0..(52 / 4) {
+            game.ensure_four_cards();
+            for _ in 0..4 {
+                game.hand.pop();
+            }
+        }
+        // an empty deck on its own should not mean that the game is finished
+        // another turn should still be played to remove cards if possible
+        assert_eq!(game.finished, false, "game should not have finished yet");
+        // attempt to fill hand when deck is already empty
+        // hand no longer able to have at least 4 cards, so game must be finished
+        game.ensure_four_cards();
+        assert_eq!(game.finished, true, "game should be marked as finished now");
+    }
 }
