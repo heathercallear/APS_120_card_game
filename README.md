@@ -14,6 +14,7 @@ Do these steps to start the game:
 - Get a shuffled deck of 52 cards (4 suits, each with 13 different values).
 - Prepare to have a hand of cards where the order of the cards must not change.
 - Deal 4 cards to yourself
+- Follow instructions below on how to remove cards from this hand
 
 ### How to remove cards from the hand
 
