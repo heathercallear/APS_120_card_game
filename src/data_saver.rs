@@ -55,6 +55,7 @@ impl<'a> DataSaver<'a> {
                         ),
                     ));
                 };
+                println!("Data folder {} created.", data_folder.display());
             }
             Err(err) => {
                 return Err(io::Error::new(
@@ -81,7 +82,7 @@ impl<'a> DataSaver<'a> {
         io::stdin()
             .read_line(&mut input)
             .expect("stdin should be readable");
-        if ["y", "yes"].contains(&input.as_str()) {
+        if ["y", "yes"].contains(&input.trim()) {
             return true;
         }
         false
@@ -98,6 +99,7 @@ impl<'a> DataSaver<'a> {
 
         // run game exponentially increasing number of times
 
+        println!("Doing up to 10^{max_exponent} runs.");
         // play some number of games to start with
         if (u32::MAX as usize) < min_exponent {
             panic!("10^{min_exponent} runs is massively too many to attempt")
@@ -175,6 +177,7 @@ impl<'a> DataSaver<'a> {
         let file_name_str = file_name.as_str();
         let mut data_folder = self.data_folder.to_path_buf();
         data_folder.push(file_name_str);
+        println!("Using data file {}", file_name);
         self.file_name = Some(file_name);
         OpenOptions::new().append(true).open(data_folder)
     }
