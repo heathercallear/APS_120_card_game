@@ -100,6 +100,8 @@ impl<'a> DataSaver<'a> {
         // run game exponentially increasing number of times
 
         println!("Doing up to 10^{max_exponent} runs.");
+        // write header line of the csv
+        writeln!(file, "{}", self.get_header_line())?;
         // play some number of games to start with
         if (u32::MAX as usize) < min_exponent {
             panic!("10^{min_exponent} runs is massively too many to attempt")
@@ -191,6 +193,14 @@ impl<'a> DataSaver<'a> {
         for result in self.game.results {
             line.push_str(", ");
             line += &result.to_string();
+        }
+        line
+    }
+
+    fn get_header_line(&self) -> String {
+        let mut line = String::from("runs");
+        for cards_left_in_hand in 0..=52 {
+            line += format!(", {}", cards_left_in_hand).as_str();
         }
         line
     }
