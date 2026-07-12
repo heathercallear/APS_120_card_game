@@ -1,0 +1,107 @@
+from math import log10, sqrt
+from pathlib import Path
+
+import matplotlib.pyplot as plt
+
+class DataPlotter:
+    DATA_FOLDER = Path(__file__).parent / 'card_game_data'
+    POSSIBLE_REMAINING_CARDS = tuple(range(53))
+
+    def __init__(self) -> None:
+        self.read_data()
+
+    def read_data(self) -> None:
+        all_data_files = sorted(self.DATA_FOLDER.glob('run-*-exp-*-splits-*.csv'))
+        if len(all_data_files) == 0:
+            raise FileNotFoundError(f'could not find data file in {self.DATA_FOLDER.absolute()}')
+        data_file = all_data_files[-1]
+        lines = data_file.read_text(encoding='utf-8').splitlines()[1:]
+        lines_split = (
+            line.split(', ')
+            for line in lines
+        )
+        self.data = {
+            int(line[0]): tuple(
+                int(cards_left_in_hand)
+                for cards_left_in_hand in line[1:]
+            )
+            for line in lines_split
+        }
+        self.float_data = {
+            runs: tuple(
+                result / runs
+                for result in results
+            )
+            for runs, results in self.data.items()
+        }
+        float_data_items = tuple(self.float_data.items())
+        # get the value of the last item
+        final_float_results = float_data_items[-1][1]
+        self.log_difference_data = {
+            runs: tuple(
+                log10(abs(result - final_result)) if final_result != 0 else 0
+                for result, final_result in zip(results, final_float_results)
+            )
+            for runs, results in float_data_items[:-1]
+        }
+
+    def plot_data(
+        self,
+        cards_left_in_hand: int = 0,
+        with_root_2_ish: bool = False,
+    ) -> None:
+        if not 0 <= cards_left_in_hand <= 52:
+            raise ValueError(f'Can only have 0–52 cards left in the hand, not {cards_left_in_hand}')
+        final_result = tuple(self.float_data.values())[-1][cards_left_in_hand]
+        plt.plot(
+            tuple(
+                log10(runs)
+                for runs in self.log_difference_data.keys()
+            ),
+            tuple(
+                results[cards_left_in_hand]
+                for results in self.log_difference_data.values()
+            ),
+            'k',
+            label=f'to {final_result:.5e}',
+        )
+        if with_root_2_ish:
+            self.plot_win_proportion_root_2_convergence()
+            plt.legend()
+        plt.title(f'Convergence of the proportion of games that have ended with {cards_left_in_hand} cards left in the hand')
+        plt.xlabel('log10(Number of runs)')
+        plt.ylabel('log10(|proportion - final proportion|)')
+
+    def plot_win_proportion_root_2_convergence(self):
+        root_2_ish = 1 / (100 * sqrt(2))
+        plt.plot(
+            tuple(
+                log10(runs)
+                for runs in self.float_data.keys()
+            ),
+            tuple(
+                log10(abs(results[0] - root_2_ish))
+                for results in self.float_data.values()
+            ),
+            'darkred',
+            label=f'to {root_2_ish:.5e} [1/100sqrt(2)]',
+        )
+        plt.title(f'Convergence of the proportion of games won on 1/100sqrt(2)')
+        plt.xlabel('log10(Number of runs)')
+        plt.ylabel('log10(|win proportion - 1/100sqrt(2)|)')
+
+    def show_data(
+        self,
+        cards_left_in_hand: int = 0,
+        with_root_2_ish: bool = False,
+        block: bool = True
+    ) -> None:
+        self.plot_data(
+            cards_left_in_hand=cards_left_in_hand,
+            with_root_2_ish=with_root_2_ish
+        )
+        plt.show(block=block)
+
+if __name__ == '__main__':
+    dp = DataPlotter()
+    dp.show_data(with_root_2_ish=True)
