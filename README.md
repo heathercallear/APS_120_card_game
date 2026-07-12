@@ -41,6 +41,37 @@ The aim of the game is to have no cards remaining in the hand.
 
 ## Basic Usage
 
+The following requires the `matplotlib` module to be installed.
+
+```bash
+$ pip install matplotlib
+```
+
+Use `DataPlotter` in `plot_data.py` to view the convergence of the proportion of games
+finished with a certain number of cards left in the hand to its final value.
+
+To compare this convergence for won games to the appealing (and very close) value of 1/100sqrt(2), simply run `plot_data.py`:
+
+```bash
+$ python plot_data.py
+```
+
+To see the convergence for any final number of cards, use `DataPlotter.show_plot`.
+
+For example:
+
+```pycon
+>>> from plot_data import DataPlotter
+>>> # read latest run data from its csv
+>>> dp = DataPlotter()
+>>> # show convergence for 4 cards left in the hand
+>>> dp.show_plot(4)
+```
+
+The above code opens a new window with the plot.
+
+## Usage of the data generation code
+
 Running the program prints the proportion of times a game ends with a certain number of cards in the hand,
 for an exponentially increasing number of runs.
 
@@ -80,3 +111,5 @@ $ deterministic_card_game
 ```
 
 This took a little under 12 minutes to run (your speed may vary).
+
+Saving 10 billion (10^10) runs took less than 1h51m10s.
