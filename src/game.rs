@@ -369,4 +369,38 @@ mod tests {
             "Game should be marked as finished (now Clubs A,10)"
         );
     }
+
+    #[test]
+    fn game_play_turn_test() {
+        let mut game = Game::new();
+        // make array of hand sizes in each turn of the known game
+        let hand_lengths = [4, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 2];
+        // turn 1 is the first turn, before `play_turn` has been called
+        let mut turn: usize = 1;
+        // make known deck (Clubs (A–K), Spades (A–K), Hearts (A–K), Diamonds (A–K))
+        game.deck.reset_to_sorted();
+        // do rest of the setup and play as in the `play_game` method
+        // deal first four cards
+        game.ensure_four_cards();
+        game.remove_cards();
+        // play turns until done
+        while !game.finished {
+            assert_eq!(
+                game.hand.len(),
+                hand_lengths[turn - 1],
+                "Hand length {} was not the expected {} on turn {}: hand is {:?}",
+                game.hand.len(),
+                hand_lengths[turn - 1],
+                turn,
+                game.hand,
+            );
+            game.play_turn();
+            turn += 1;
+        }
+        assert_eq!(
+            game.hand.len(),
+            2,
+            "This known game should end with 2 cards in the hand"
+        );
+    }
 }
