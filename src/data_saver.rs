@@ -108,7 +108,8 @@ impl<'a> DataSaver<'a> {
         }
         self.game.play_games(10usize.pow(min_exponent as u32));
         writeln!(file, "{}", self.get_data_line())?;
-        for _ in min_exponent..=max_exponent {
+        for exponent in min_exponent..=max_exponent {
+            println!("Done 10^{exponent} runs. Continuing...");
             // doing powers of 10 runs, so doing 9 times as many runs -> multiply total runs by 10
             let runs_to_reach_next_exponent = self.game.total_runs * 10;
             let runs_in_each_split =
