@@ -56,6 +56,8 @@ To compare this convergence for won games to the appealing (and very close) valu
 $ python plot_data.py
 ```
 
+![Log-log plot comparing convergence of the proportion of won games to its final result versus to 1/100sqrt(2). Until about 10^8 runs, both plots look very similar, steadily (if jaggedly) decreasing. After this, the convergence to 1/100sqrt(2) stays at about 10^-5 difference from the data. However, the convergence to the final result continues to jaggedly decrease down to roughly 10^-7 difference from the data.](/img/run-00001-plot-00-cards-left.svg)
+
 To see the convergence for any final number of cards, use `DataPlotter.show_plot`.
 
 For example:
