@@ -108,8 +108,9 @@ impl<'a> DataSaver<'a> {
         writeln!(file, "{}", self.get_data_line())?;
         for _ in min_exponent..=max_exponent {
             // doing powers of 10 runs, so doing 9 times as many runs -> multiply total runs by 10
-            let runs_to_reach_next_exponent = self.game.total_runs * 9;
-            let runs_in_each_split = runs_to_reach_next_exponent / number_of_splits;
+            let runs_to_reach_next_exponent = self.game.total_runs * 10;
+            let runs_in_each_split =
+                (runs_to_reach_next_exponent - self.game.total_runs) / number_of_splits;
             for _ in 1..number_of_splits {
                 self.game.play_games(runs_in_each_split);
                 writeln!(file, "{}", self.get_data_line())?;
