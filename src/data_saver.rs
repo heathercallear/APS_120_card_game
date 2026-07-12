@@ -175,11 +175,14 @@ impl<'a> DataSaver<'a> {
         );
         // make new file with this name within self.data_folder
         let file_name_str = file_name.as_str();
-        let mut data_folder = self.data_folder.to_path_buf();
-        data_folder.push(file_name_str);
+        let mut data_file = self.data_folder.to_path_buf();
+        data_file.push(file_name_str);
         println!("Using data file {}", file_name);
         self.file_name = Some(file_name);
-        OpenOptions::new().append(true).open(data_folder)
+        // create file
+        File::create(data_file.clone())?;
+        // open the file in append mode
+        OpenOptions::new().append(true).open(data_file)
     }
 
     fn get_data_line(&self) -> String {
