@@ -194,6 +194,9 @@ impl Game {
             self.hand.pop();
             self.hand.pop();
             self.ensure_four_cards();
+            if !self.finished {
+                self.remove_cards();
+            }
         } else if first_card.suit == last_card.suit {
             let Some(last_card) = self.hand.pop() else {
                 panic!("hand should have at least 4 cards if not finished")
@@ -202,6 +205,9 @@ impl Game {
             self.hand.pop();
             self.hand.push(last_card);
             self.ensure_four_cards();
+            if !self.finished {
+                self.remove_cards();
+            }
         }
     }
 
@@ -341,98 +347,8 @@ mod tests {
         game.remove_cards();
         assert_eq!(
             game.hand.len(),
-            50,
-            "Same suit should remove 2 cards (now Diamonds A–10,K)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
-            48,
-            "Same suit should remove 2 cards (now Diamonds A–8,K)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
-            46,
-            "Same suit should remove 2 cards (now Diamonds A–6,K)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
-            44,
-            "Same suit should remove 2 cards (now Diamonds A–4,K)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
-            42,
-            "Same suit should remove 2 cards (now Hearts A–K, Diamonds A,2,K)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
-            38,
-            "Same rank should remove 4 cards (now Hearts A–Q)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
-            36,
-            "Same suit should remove 2 cards (now Hearts A–9,Q)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
-            34,
-            "Same suit should remove 2 cards (now Hearts A–7,Q)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
-            32,
-            "Same suit should remove 2 cards (now Hearts A–5,Q)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
-            30,
-            "Same suit should remove 2 cards (now Hearts A–3,Q)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
-            28,
-            "Same suit should remove 2 cards (now Spades A–K, Hearts A,Q)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
-            24,
-            "Same rank should remove 4 cards (now Spades A–J)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
-            22,
-            "Same suit should remove 2 cards (now Spades A–8,J)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
-            20,
-            "Same suit should remove 2 cards (now Spades A–6,J)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
-            18,
-            "Same suit should remove 2 cards (now Spades A–4,J)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
             16,
-            "Same suit should remove 2 cards (now Clubs A–K, Spades A,2,J)"
+            "Recursion should remove 36 = 2*4 + 14*2 cards (now Clubs A–K, Spades A,2,J)"
         );
         // pop King and Queen of Clubs off of the hand so this can continue
         game.hand.remove(12);
@@ -445,39 +361,8 @@ mod tests {
         game.remove_cards();
         assert_eq!(
             game.hand.len(),
-            10,
-            "Same rank should remove 4 cards (now Clubs A–10)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
-            8,
-            "Same suit should remove 2 cards (now Clubs A–7,10)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
-            6,
-            "Same suit should remove 2 cards (now Clubs A–5,10)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
-            4,
-            "Same suit should remove 2 cards (now Clubs A–3,10)"
-        );
-
-        // check that `finished` is set appropriately
-
-        assert_eq!(
-            game.finished, false,
-            "Game should not yet be marked as finished (now Clubs A–3,10)"
-        );
-        game.remove_cards();
-        assert_eq!(
-            game.hand.len(),
             2,
-            "Same suit should remove 2 cards (now Clubs A,10)"
+            "Recursion should remove 12 = 1*4 + 4*2 cards (now Clubs A,10)"
         );
         assert_eq!(
             game.finished, true,
