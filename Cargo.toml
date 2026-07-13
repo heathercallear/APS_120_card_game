@@ -2,6 +2,7 @@
 name = "deterministic-card-game"
 version = "0.2.0"
 edition = "2024"
+description = "Run Morgan's game from problem 120 of A Problem Squared."
 
 [dependencies]
 rand = "0.10.2"
