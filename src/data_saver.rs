@@ -4,10 +4,14 @@ use std::io::{self, Write};
 use std::path::Path;
 
 /// Runs the game lots of times and saves the results to a file.
+///
+/// By default, writing data prints to stdin whenever a new power of 10 number of runs is reached.
+/// To disable this, set the `quiet` field to `true`.
 pub struct DataSaver<'a> {
     pub game: Game,
     data_folder: &'a Path,
     pub file_name: Option<String>,
+    pub quiet: bool,
 }
 
 impl<'a> DataSaver<'a> {
@@ -72,6 +76,7 @@ impl<'a> DataSaver<'a> {
             game: Game::new(),
             data_folder,
             file_name: None,
+            quiet: false,
         })
     }
 
@@ -99,7 +104,9 @@ impl<'a> DataSaver<'a> {
 
         // run game exponentially increasing number of times
 
-        println!("Doing up to 10^{max_exponent} runs.");
+        if !self.quiet {
+            println!("Doing up to 10^{max_exponent} runs.");
+        }
         // write header line of the csv
         writeln!(file, "{}", self.get_header_line())?;
         // play some number of games to start with
@@ -109,7 +116,9 @@ impl<'a> DataSaver<'a> {
         self.game.play_games(10usize.pow(min_exponent as u32));
         writeln!(file, "{}", self.get_data_line())?;
         for exponent in min_exponent..=max_exponent {
-            println!("Done 10^{exponent} runs. Continuing...");
+            if !self.quiet {
+                println!("Done 10^{exponent} runs. Continuing...");
+            }
             // doing powers of 10 runs, so doing 9 times as many runs -> multiply total runs by 10
             let runs_to_reach_next_exponent = self.game.total_runs * 10;
             let runs_in_each_split =
@@ -181,7 +190,9 @@ impl<'a> DataSaver<'a> {
         let file_name_str = file_name.as_str();
         let mut data_file = self.data_folder.to_path_buf();
         data_file.push(file_name_str);
-        println!("Using data file {}", file_name);
+        if !self.quiet {
+            println!("Using data file {}", file_name);
+        }
         self.file_name = Some(file_name);
         // create file
         File::create(data_file.clone())?;
