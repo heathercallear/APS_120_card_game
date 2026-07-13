@@ -115,7 +115,7 @@ impl<'a> DataSaver<'a> {
         }
         self.game.play_games(10usize.pow(min_exponent as u32));
         writeln!(file, "{}", self.get_data_line())?;
-        for exponent in min_exponent..=max_exponent {
+        for exponent in min_exponent..max_exponent {
             if !self.quiet {
                 println!("Done 10^{exponent} runs. Continuing...");
             }
@@ -131,6 +131,9 @@ impl<'a> DataSaver<'a> {
             self.game
                 .play_games(runs_to_reach_next_exponent - self.game.total_runs);
             writeln!(file, "{}", self.get_data_line())?;
+        }
+        if !self.quiet {
+            println!("Finished doing all 10^{max_exponent} runs.")
         }
         Ok(())
     }
