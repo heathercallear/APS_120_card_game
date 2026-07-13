@@ -1,6 +1,6 @@
 use deterministic_card_game::{DataSaver, Game};
 
-const MAX_EXPONENT: usize = 9;
+const MAX_EXPONENT: usize = 7;
 
 fn main() {
     if DataSaver::ask_for_permission("Run thoroughly and save data to file? ('y' or 'yes')") {
