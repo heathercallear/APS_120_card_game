@@ -82,6 +82,8 @@ fn save_data(max_exponent: usize, quiet: u8) {
                 .file_name
                 .expect("write_data should set the `file_name` field")
         );
+    }
+    if quiet == 0 {
         println!("Total runs: {}", data_saver.game.total_runs);
     }
 }
