@@ -68,7 +68,7 @@ class DataPlotter:
         if with_root_2_ish:
             self.plot_win_proportion_root_2_convergence()
             plt.legend()
-        plt.title(f'Convergence of the proportion of games that have ended with {cards_left_in_hand} cards left in the hand')
+        plt.title(f'Convergence of the proportion of games that have ended with {cards_left_in_hand} cards left in the hand to {final_result:.5e}')
         plt.xlabel('log10(Number of runs)')
         plt.ylabel('log10(|proportion - final proportion|)')
 
