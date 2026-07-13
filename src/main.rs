@@ -1,6 +1,7 @@
 use deterministic_card_game::{DataSaver, Game};
 
 const MAX_EXPONENT: usize = 7;
+const MAX_EXPONENT_FOR_CSV: usize = 10;
 
 fn main() {
     if DataSaver::ask_for_permission("Run thoroughly and save data to file? ('y' or 'yes')") {
@@ -11,7 +12,7 @@ fn main() {
                 return;
             }
         };
-        if let Err(err) = data_saver.write_data(2, 10, 9) {
+        if let Err(err) = data_saver.write_data(2, MAX_EXPONENT_FOR_CSV, 9) {
             eprintln!("Error: failed to write data to file: {err}");
             return;
         }
