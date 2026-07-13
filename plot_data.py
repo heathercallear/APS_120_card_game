@@ -1,3 +1,4 @@
+from argparse import ArgumentParser
 from math import log10, sqrt
 from pathlib import Path
 
@@ -103,5 +104,33 @@ class DataPlotter:
         plt.show(block=block)
 
 if __name__ == '__main__':
+    parser = ArgumentParser(
+        prog='deterministic_card_game',
+        description='Show line graph of convergence of game results.',
+    )
+    def check_number_of_cards(number_of_cards_str: str) -> int:
+        try:
+            number_of_cards = int(number_of_cards_str)
+        except ValueError:
+            parser.error(f'{number_of_cards_str!r} is not a valid int')
+        if not 0 <= number_of_cards <= 52:
+            parser.error(f'{number_of_cards} is not between 0 and 52 inclusive')
+        return number_of_cards
+    parser.add_argument(
+        'number_of_cards',
+        nargs='?',
+        default=None,
+        type=check_number_of_cards,
+        help='Number of cards left in the hand at the end of a game.'
+    )
+    parser.add_argument(
+        '--version',
+        action='version',
+        version='%(prog)s v0.2.0',
+    )
+    parsed = parser.parse_args()
     dp = DataPlotter()
-    dp.show_data(with_root_2_ish=True)
+    if parsed.number_of_cards is None:
+        dp.show_data(with_root_2_ish=True)
+    else:
+        dp.show_data(parsed.number_of_cards)
