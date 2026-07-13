@@ -82,7 +82,9 @@ Running the program first asks if you would like to run thoroughly and save the 
 If you respond with 'y' or 'yes', a new csv file will be made in a folder called 'card_game_data'
 in your current working directory
 (if this folder does not exist, you will be asked if it may make the folder for you).
-This csv will contain run information for 10^10 runs.
+This csv will contain run information for 10^10 runs by default.
+The number of runs to save CSV data for can be changed using the `MAX_EXPONENT_FOR_CSV` constant in 'main.rs'
+(the default value is `10`, resulting in 10^10 runs).
 
 Any response other than 'y' or 'yes' (such as just pressing enter) will result in run information
 only being printed to the terminal (i.e. no files will be made).
