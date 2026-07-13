@@ -5,24 +5,7 @@ const MAX_EXPONENT_FOR_CSV: usize = 10;
 
 fn main() {
     if DataSaver::ask_for_permission("Run thoroughly and save data to file? ('y' or 'yes')") {
-        let mut data_saver = match DataSaver::new("./card_game_data") {
-            Ok(data_saver) => data_saver,
-            Err(err) => {
-                eprintln!("Error: failed to find/make data folder: {err}");
-                return;
-            }
-        };
-        if let Err(err) = data_saver.write_data(2, MAX_EXPONENT_FOR_CSV, 9) {
-            eprintln!("Error: failed to write data to file: {err}");
-            return;
-        }
-        println!(
-            "Data file {} finished.",
-            data_saver
-                .file_name
-                .expect("write_data should set the `file_name` field")
-        );
-        println!("Total runs: {}", data_saver.game.total_runs);
+        save_data();
         // do not do any of the later printing of making a data file
         return;
     }
@@ -62,4 +45,25 @@ fn print_game_results(game: &Game, exponent: &usize) {
         results_proportion_str,
     );
     println!();
+}
+
+fn save_data() {
+    let mut data_saver = match DataSaver::new("./card_game_data") {
+        Ok(data_saver) => data_saver,
+        Err(err) => {
+            eprintln!("Error: failed to find/make data folder: {err}");
+            return;
+        }
+    };
+    if let Err(err) = data_saver.write_data(2, MAX_EXPONENT_FOR_CSV, 9) {
+        eprintln!("Error: failed to write data to file: {err}");
+        return;
+    }
+    println!(
+        "Data file {} finished.",
+        data_saver
+            .file_name
+            .expect("write_data should set the `file_name` field")
+    );
+    println!("Total runs: {}", data_saver.game.total_runs);
 }
