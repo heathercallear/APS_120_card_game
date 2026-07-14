@@ -28,7 +28,7 @@ pub struct Cli {
     pub elapsed_time: bool,
 
     /// Number of threads to spawn
-    #[arg(short, long, default_value_t = 1, require_equals = true)]
+    #[arg(short, long, default_value_t = 7, require_equals = true)]
     pub threads: usize,
 }
 

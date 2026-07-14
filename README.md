@@ -268,7 +268,7 @@ Options:
   -s, --save-data          Save csv file of game run data
   -q, --quiet...           Print less information (only show final results / show no result at all)
   -e, --elapsed-time       Print the time elapsed during calulation
-  -t, --threads=<THREADS>  Number of threads to spawn [default: 1]
+  -t, --threads=<THREADS>  Number of threads to spawn [default: 7]
   -h, --help               Print help (see more with '--help')
   -V, --version            Print version
 ```
@@ -306,7 +306,7 @@ Options:
   -t, --threads=<THREADS>
           Number of threads to spawn
 
-          [default: 1]
+          [default: 7]
 
   -h, --help
           Print help (see a summary with '-h')
