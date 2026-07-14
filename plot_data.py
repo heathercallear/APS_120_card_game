@@ -1,18 +1,34 @@
 from argparse import ArgumentParser
 from math import log10, sqrt
 from pathlib import Path
+from re import compile as re_compile
 
 import matplotlib.pyplot as plt
 
 class DataPlotter:
     DATA_FOLDER = Path(__file__).parent / 'card_game_data'
     POSSIBLE_REMAINING_CARDS = tuple(range(53))
+    FILE_REGEX = re_compile(r'run-(\d+)-exp-(\d+)-splits-(\d+).csv')
 
     def __init__(self) -> None:
         self.read_data()
 
+    def file_sorter(self, file: Path) -> tuple[int, int, int]:
+        regex_match = self.FILE_REGEX.match(file.name)
+        if regex_match is None:
+            # if regex does not match, sort file to the bottom of the list
+            return (-1, -1, -1)
+        return (
+            int(regex_match.group(2)), # sort first by number of runs
+            int(regex_match.group(1)), # then by number of splits
+            int(regex_match.group(3)), # then by recentness of file
+        )
+
     def read_data(self) -> None:
-        all_data_files = sorted(self.DATA_FOLDER.glob('run-*-exp-*-splits-*.csv'))
+        all_data_files = sorted(
+            self.DATA_FOLDER.glob('run-*-exp-*-splits-*.csv'),
+            key=self.file_sorter
+        )
         if len(all_data_files) == 0:
             raise FileNotFoundError(f'could not find data file in {self.DATA_FOLDER.absolute()}')
         data_file = all_data_files[-1]
