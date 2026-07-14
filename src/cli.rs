@@ -25,7 +25,11 @@ pub struct Cli {
 
     /// Print the time elapsed during calulation
     #[arg(short, long)]
-    pub time_elapsed: bool,
+    pub elapsed_time: bool,
+
+    /// Number of threads to spawn
+    #[arg(short, long, default_value_t = 1, require_equals = true)]
+    pub threads: usize,
 }
 
 #[cfg(test)]

@@ -34,13 +34,14 @@ pub struct Game {
     finished: bool,
     pub results: [usize; 53],
     pub total_runs: usize,
+    pub threads: usize,
 }
 
 impl Game {
     /// Make a new game.
     ///
     /// Note that only a single instance of `Game` is required to play multiple games.
-    pub fn new() -> Self {
+    pub fn new(threads: usize) -> Self {
         Game {
             deck: Deck::new(),
             hand: Vec::with_capacity(52),
@@ -49,6 +50,7 @@ impl Game {
             // index with the number of cards remaining in the hand at the end of the game
             results: [0; 53],
             total_runs: 0,
+            threads,
         }
     }
 
@@ -83,25 +85,32 @@ impl Game {
     /// Note that calling this multiple times with smaller `n` is equivalent to
     /// calling this once with a larger `n` (that is equal to the sum of the smaller `n`s).
     pub fn play_games(&mut self, n: usize) {
-        if n <= 1_000 {
+        if self.threads == 1 || n <= 1_000 {
             self.play_games_raw(n);
         } else {
-            let half_n = n / 2;
-            let handle_1 = std::thread::spawn(move || {
-                let mut game = Game::new();
-                game.play_games(half_n);
+            let mut handles = Vec::with_capacity(self.threads);
+            // spawn `self.threads` many threads with equalish split of played games
+            let fraction_n = n / self.threads;
+            for _ in 1..self.threads {
+                let fraction_n_copy = fraction_n;
+                handles.push(std::thread::spawn(move || {
+                    let mut game = Game::new(0);
+                    game.play_games_raw(fraction_n_copy);
+                    game.results
+                }));
+            }
+            let remaining_n = n - (self.threads - 1) * fraction_n;
+            handles.push(std::thread::spawn(move || {
+                let mut game = Game::new(0);
+                game.play_games_raw(remaining_n);
                 game.results
-            });
-            let other_half_n = n - n / 2;
-            let handle_2 = std::thread::spawn(move || {
-                let mut game = Game::new();
-                game.play_games(other_half_n);
-                game.results
-            });
-            let results_1 = handle_1.join().unwrap();
-            let results_2 = handle_2.join().unwrap();
-            for i in 0..self.results.len() {
-                self.results[i] += results_1[i] + results_2[i]
+            }));
+            // add results from each thread to own results
+            for handle in handles {
+                let results = handle.join().unwrap();
+                for i in 0..53 {
+                    self.results[i] += results[i];
+                }
             }
             self.total_runs += n;
         }
@@ -252,7 +261,7 @@ mod tests {
 
     #[test]
     fn game_draw_card_test() {
-        let mut game = Game::new();
+        let mut game = Game::new(1);
         game.deck.reset_to_sorted();
         assert_eq!(game.hand.len(), 0, "Game hand should start as empty");
         assert_eq!(
@@ -293,7 +302,7 @@ mod tests {
 
     #[test]
     fn ensure_four_cards_test() {
-        let mut game = Game::new();
+        let mut game = Game::new(1);
         game.deck.reset_to_sorted();
 
         assert_eq!(game.hand.len(), 0, "Hand should start off empty");
@@ -361,7 +370,7 @@ mod tests {
 
     #[test]
     fn game_remove_cards_test() {
-        let mut game = Game::new();
+        let mut game = Game::new(1);
         game.deck.reset_to_sorted();
         // make hand Clubs (A–K), Spades (A–K), Hearts (A–K), Diamonds (A–K)
         for _ in 0..52 {
@@ -397,7 +406,7 @@ mod tests {
 
     #[test]
     fn game_play_turn_test() {
-        let mut game = Game::new();
+        let mut game = Game::new(1);
         // make array of hand sizes in each turn of the known game
         let hand_lengths = [4, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 2];
         // turn 1 is the first turn, before `play_turn` has been called

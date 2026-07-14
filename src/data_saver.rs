@@ -15,7 +15,7 @@ pub struct DataSaver<'a> {
 }
 
 impl<'a> DataSaver<'a> {
-    pub fn new(data_folder_name: &'a str) -> io::Result<Self> {
+    pub fn new(data_folder_name: &'a str, threads: usize) -> io::Result<Self> {
         let data_folder: &'a Path = Path::new(data_folder_name);
         // check that data folder exists, make it if not
         match data_folder.try_exists() {
@@ -73,7 +73,7 @@ impl<'a> DataSaver<'a> {
             }
         };
         Ok(Self {
-            game: Game::new(),
+            game: Game::new(threads),
             data_folder,
             file_name: None,
             quiet: false,

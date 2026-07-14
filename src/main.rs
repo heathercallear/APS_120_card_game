@@ -6,15 +6,15 @@ use deterministic_card_game::{Cli, DataSaver, Game};
 fn main() {
     let cli = Cli::parse();
     // record time if needed for elapsed time printing
-    let now: Option<Instant> = if cli.time_elapsed {
+    let now: Option<Instant> = if cli.elapsed_time {
         Some(std::time::Instant::now())
     } else {
         None
     };
 
-    let mut game = Game::new();
+    let mut game = Game::new(cli.threads);
     if cli.save_data {
-        save_data(cli.max_exponent, cli.quiet);
+        save_data(cli.max_exponent, cli.quiet, cli.threads);
     } else if cli.quiet > 0 {
         game.play_games(10usize.pow(cli.max_exponent as u32));
         // if only asked for the first level of quiet, still print final results
@@ -33,7 +33,7 @@ fn main() {
     }
 
     // done now, print elapsed time if asked
-    if cli.time_elapsed {
+    if cli.elapsed_time {
         println!("Time elapsed: {} ms", now.unwrap().elapsed().as_millis());
     }
 }
@@ -59,9 +59,9 @@ fn print_game_results(game: &Game, exponent: &usize, max_runs_digits: usize) {
     println!();
 }
 
-fn save_data(max_exponent: usize, quiet: u8) {
+fn save_data(max_exponent: usize, quiet: u8, threads: usize) {
     // set up data_saver (and make data folder if required and allowed)
-    let mut data_saver = match DataSaver::new("./card_game_data") {
+    let mut data_saver = match DataSaver::new("./card_game_data", threads) {
         Ok(data_saver) => data_saver,
         Err(err) => {
             eprintln!("Error: failed to find/make data folder: {err}");
