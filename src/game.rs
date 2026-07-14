@@ -83,6 +83,30 @@ impl Game {
     /// Note that calling this multiple times with smaller `n` is equivalent to
     /// calling this once with a larger `n` (that is equal to the sum of the smaller `n`s).
     pub fn play_games(&mut self, n: usize) {
+        if n <= 10_000 {
+            self.play_games_raw(n);
+        } else {
+            let half_n = n / 2;
+            let handle_1 = std::thread::spawn(move || {
+                let mut game = Game::new();
+                game.play_games(half_n);
+                game.results
+            });
+            let other_half_n = n - n / 2;
+            let handle_2 = std::thread::spawn(move || {
+                let mut game = Game::new();
+                game.play_games(other_half_n);
+                game.results
+            });
+            let results_1 = handle_1.join().unwrap();
+            let results_2 = handle_2.join().unwrap();
+            for i in 0..self.results.len() {
+                self.results[i] += results_1[i] + results_2[i]
+            }
+        }
+    }
+
+    fn play_games_raw(&mut self, n: usize) {
         for _ in 0..n {
             self.results[self.play_game()] += 1;
             self.total_runs += 1;
