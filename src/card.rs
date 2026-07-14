@@ -86,7 +86,8 @@ impl Deck {
         // shuffle cards with Fisher-Yates algorithm
         // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
         for i in 0..=50 {
-            self.cards.swap(i, (i..=51).sample_single(&mut self.rng).unwrap());
+            self.cards
+                .swap(i, (i..=51).sample_single(&mut self.rng).unwrap());
         }
     }
 
