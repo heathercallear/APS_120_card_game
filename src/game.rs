@@ -103,6 +103,7 @@ impl Game {
             for i in 0..self.results.len() {
                 self.results[i] += results_1[i] + results_2[i]
             }
+            self.total_runs += n;
         }
     }
 
