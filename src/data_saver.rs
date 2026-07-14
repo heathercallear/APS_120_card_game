@@ -115,6 +115,8 @@ impl<'a> DataSaver<'a> {
         }
         self.game.play_games(10usize.pow(min_exponent as u32));
         writeln!(file, "{}", self.get_data_line())?;
+        // keep track of roughly how long it has been since the data file was last synced
+        let mut runs_since_last_sync: usize = 0;
         for exponent in min_exponent..max_exponent {
             if !self.quiet {
                 println!("Done 10^{exponent} runs. Continuing...");
@@ -126,11 +128,22 @@ impl<'a> DataSaver<'a> {
             for _ in 1..number_of_splits {
                 self.game.play_games(runs_in_each_split);
                 writeln!(file, "{}", self.get_data_line())?;
+                // ensure that data is saved to file for long calculations (10^7 runs -> ~~1s)
+                runs_since_last_sync += runs_in_each_split;
+                if 10_000_000 < runs_since_last_sync {
+                    runs_since_last_sync = 0;
+                    file.sync_data()?;
+                }
             }
             // make sure that the last split includes any straggling remaining runs
             self.game
                 .play_games(runs_to_reach_next_exponent - self.game.total_runs);
             writeln!(file, "{}", self.get_data_line())?;
+            // ensure that data is saved to file for long calculations (10^8 runs -> ~~10s)
+            if 7 < exponent {
+                runs_since_last_sync = 0;
+                file.sync_data()?;
+            }
         }
         if !self.quiet {
             println!("Finished doing all 10^{max_exponent} runs.")
