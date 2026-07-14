@@ -162,13 +162,13 @@ The number of runs at each recorded data point goes up in powers of 10,
 with each power of 10 getting 10 data points.
 For example: 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, ...
 
-[The CSV in this repository](/card_game_data/run-00001-exp-10-splits-9.csv)
+[The CSV in this repository](/card_game_data/run-00010-exp-11-splits-9.csv)
 was made using this command with the following output:
 
 ```bash
-$ deterministic_card_game 10 -s
-Using data file run-00001-exp-10-splits-9.csv
-Doing up to 10^10 runs.
+$ deterministic_card_game 11 -s -e
+Using data file run-00010-exp-11-splits-9.csv
+Doing up to 10^11 runs.
 Done 10^2 runs. Continuing...
 Done 10^3 runs. Continuing...
 Done 10^4 runs. Continuing...
@@ -177,9 +177,11 @@ Done 10^6 runs. Continuing...
 Done 10^7 runs. Continuing...
 Done 10^8 runs. Continuing...
 Done 10^9 runs. Continuing...
-Finished doing all 10^10 runs.
-Data file run-00001-exp-10-splits-9.csv finished.
-Total runs: 10000000000
+Done 10^10 runs. Continuing...
+Finished doing all 10^11 runs.
+Data file run-00010-exp-11-splits-9.csv finished.
+Total runs: 100000000000
+Time elapsed: 17350896 ms
 ```
 
 Whenever this program is run:
