@@ -1,4 +1,4 @@
-use rand::seq::SliceRandom;
+use rand::distr::uniform::SampleRange;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Suit {
@@ -83,7 +83,11 @@ impl Deck {
 
     pub fn reset(&mut self) {
         self.index = 52;
-        self.cards.shuffle(&mut self.rng);
+        // shuffle cards with Fisher-Yates algorithm
+        // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
+        for i in 0..=50 {
+            self.cards.swap(i, (i..=51).sample_single(&mut self.rng).unwrap());
+        }
     }
 
     pub fn pop(&mut self) -> Option<Card> {
