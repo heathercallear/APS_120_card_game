@@ -83,7 +83,7 @@ impl Game {
     /// Note that calling this multiple times with smaller `n` is equivalent to
     /// calling this once with a larger `n` (that is equal to the sum of the smaller `n`s).
     pub fn play_games(&mut self, n: usize) {
-        if n <= 10_000 {
+        if n <= 1_000 {
             self.play_games_raw(n);
         } else {
             let half_n = n / 2;
