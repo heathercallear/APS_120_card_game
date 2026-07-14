@@ -78,52 +78,233 @@ $ python plot_data.py
 
 ## Usage of the data generation code
 
-Running the program first asks if you would like to run thoroughly and save the data to a file.
-If you respond with 'y' or 'yes', a new csv file will be made in a folder called 'card_game_data'
-in your current working directory
-(if this folder does not exist, you will be asked if it may make the folder for you).
-This csv will contain run information for 10^10 runs by default.
-The number of runs to save CSV data for can be changed using the `MAX_EXPONENT_FOR_CSV` constant in 'main.rs'
-(the default value is `10`, resulting in 10^10 runs).
-
-Any response other than 'y' or 'yes' (such as just pressing enter) will result in run information
-only being printed to the terminal (i.e. no files will be made).
-This prints the proportion of times a game ends with a certain number of cards in the hand,
-for an exponentially increasing number of runs.
-
-Each successive set of runs includes all the previous ones
-(e.g. to go from 100 runs to 1000 runs, the game is played 900 more times).
-
-This format is intended to make convergence of the results more identifiable.
-
-By default, it goes up to playing the game 10^7 times.
-This can be changed using the `MAX_EXPONENT` constant in 'main.rs'.
+### Running the executable
 
 If running using `cargo`, use the `--release` option for improved speed:
 
 ```bash
-$ cargo run --release
+$ cargo run --release --
 ```
 
-For example (note that exact results will differ due to the game's randomness):
+The rest of the examples will instead directly run the executable that this generates.
 
 ```bash
 $ deterministic_card_game
-Run thoroughly and save data to file? ('y' or 'yes')
-
-10^2 (     100) runs: 2.00000e-2, 0, 2.00000e-2, 0, 5.00000e-2, 0, 9.00000e-2, 0, 1.30000e-1, 0, 6.00000e-2, 0, 1.20000e-1, 0, 1.00000e-1, 0, 1.20000e-1, 0, 1.00000e-1, 0, 6.00000e-2, 0, 2.00000e-2, 0, 6.00000e-2, 0, 1.00000e-2, 0, 3.00000e-2, 0, 1.00000e-2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-
-10^3 (    1000) runs: 5.00000e-3, 0, 5.50000e-2, 0, 7.80000e-2, 0, 8.60000e-2, 0, 9.60000e-2, 0, 1.06000e-1, 0, 9.40000e-2, 0, 8.60000e-2, 0, 8.80000e-2, 0, 8.10000e-2, 0, 5.70000e-2, 0, 4.70000e-2, 0, 4.40000e-2, 0, 2.00000e-2, 0, 2.60000e-2, 0, 1.60000e-2, 0, 9.00000e-3, 0, 4.00000e-3, 0, 1.00000e-3, 0, 1.00000e-3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-
-10^4 (   10000) runs: 5.30000e-3, 0, 4.65000e-2, 0, 7.81000e-2, 0, 9.23000e-2, 0, 9.64000e-2, 0, 9.93000e-2, 0, 1.00500e-1, 0, 9.62000e-2, 0, 9.14000e-2, 0, 7.74000e-2, 0, 5.80000e-2, 0, 4.68000e-2, 0, 3.94000e-2, 0, 2.52000e-2, 0, 2.06000e-2, 0, 1.25000e-2, 0, 7.90000e-3, 0, 2.70000e-3, 0, 1.60000e-3, 0, 1.20000e-3, 0, 4.00000e-4, 0, 1.00000e-4, 0, 2.00000e-4, 0, 0, 0, 0, 0, 0, 0, 0
-
-10^5 (  100000) runs: 6.96000e-3, 0, 4.51300e-2, 0, 7.94900e-2, 0, 9.40200e-2, 0, 9.82100e-2, 0, 1.01620e-1, 0, 9.94900e-2, 0, 9.36400e-2, 0, 8.58000e-2, 0, 7.45500e-2, 0, 6.20100e-2, 0, 4.82000e-2, 0, 3.79500e-2, 0, 2.69100e-2, 0, 1.86700e-2, 0, 1.21900e-2, 0, 7.52000e-3, 0, 3.76000e-3, 0, 2.12000e-3, 0, 1.06000e-3, 0, 5.00000e-4, 0, 1.30000e-4, 0, 6.00000e-5, 0, 1.00000e-5, 0, 0, 0, 0, 0, 0
-
-10^6 ( 1000000) runs: 6.94300e-3, 0, 4.61860e-2, 0, 8.02360e-2, 0, 9.36100e-2, 0, 9.84480e-2, 0, 1.00011e-1, 0, 9.85740e-2, 0, 9.28810e-2, 0, 8.54230e-2, 0, 7.45180e-2, 0, 6.21930e-2, 0, 4.92040e-2, 0, 3.80080e-2, 0, 2.73280e-2, 0, 1.89710e-2, 0, 1.21500e-2, 0, 7.36900e-3, 0, 4.07900e-3, 0, 2.20300e-3, 0, 9.84000e-4, 0, 4.33000e-4, 0, 1.75000e-4, 0, 5.40000e-5, 0, 1.50000e-5, 0, 4.00000e-6, 0, 0, 0, 0
-
-10^7 (10000000) runs: 7.03180e-3, 0, 4.59674e-2, 0, 8.03140e-2, 0, 9.38149e-2, 0, 9.83423e-2, 0, 9.98679e-2, 0, 9.85041e-2, 0, 9.31323e-2, 0, 8.51668e-2, 0, 7.43117e-2, 0, 6.22310e-2, 0, 4.97440e-2, 0, 3.78407e-2, 0, 2.74555e-2, 0, 1.89134e-2, 0, 1.21236e-2, 0, 7.29460e-3, 0, 4.14590e-3, 0, 2.14730e-3, 0, 9.87000e-4, 0, 4.27300e-4, 0, 1.62700e-4, 0, 5.47000e-5, 0, 1.55000e-5, 0, 3.20000e-6, 0, 4.00000e-7, 0, 0
 ```
 
-This took about 7s to run (your speed may vary).
+These two methods of running the program are equivalent.
 
-Saving 10 billion (10^10) runs took less than 1h51m10s.
+### Default behaviour
+
+If no arguments are given, 10^7 runs of the game are played,
+with the proportion of games that have ended in each number of hands printed at every power of 10 runs
+(other than 10, since this is far too small a number of results to mean anything).
+For example:
+
+```bash
+$ deterministic_card_game
+10^2 (     100) runs: 1.00000e-2, 0, 3.00000e-2, 0, 5.00000e-2, 0, 1.00000e-1, 0, 1.10000e-1, 0, 1.20000e-1, 0, 5.00000e-2, 0, 7.00000e-2, 0, 1.90000e-1, 0, 5.00000e-2, 0, 4.00000e-2, 0, 6.00000e-2, 0, 4.00000e-2, 0, 2.00000e-2, 0, 3.00000e-2, 0, 1.00000e-2, 0, 2.00000e-2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+
+10^3 (    1000) runs: 5.00000e-3, 0, 5.40000e-2, 0, 7.20000e-2, 0, 9.50000e-2, 0, 9.50000e-2, 0, 1.12000e-1, 0, 9.70000e-2, 0, 8.00000e-2, 0, 1.01000e-1, 0, 7.50000e-2, 0, 6.30000e-2, 0, 4.50000e-2, 0, 3.60000e-2, 0, 2.70000e-2, 0, 1.30000e-2, 0, 1.10000e-2, 0, 1.20000e-2, 0, 2.00000e-3, 0, 3.00000e-3, 0, 2.00000e-3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+
+10^4 (   10000) runs: 6.90000e-3, 0, 4.46000e-2, 0, 7.70000e-2, 0, 9.56000e-2, 0, 1.03100e-1, 0, 9.58000e-2, 0, 9.92000e-2, 0, 9.51000e-2, 0, 8.64000e-2, 0, 7.32000e-2, 0, 5.82000e-2, 0, 4.97000e-2, 0, 4.13000e-2, 0, 2.60000e-2, 0, 2.00000e-2, 0, 1.09000e-2, 0, 7.50000e-3, 0, 4.50000e-3, 0, 2.90000e-3, 0, 1.40000e-3, 0, 4.00000e-4, 0, 3.00000e-4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+
+10^5 (  100000) runs: 7.25000e-3, 0, 4.62800e-2, 0, 7.89700e-2, 0, 9.38500e-2, 0, 9.88400e-2, 0, 1.00900e-1, 0, 9.92200e-2, 0, 9.32300e-2, 0, 8.43100e-2, 0, 7.37600e-2, 0, 6.13600e-2, 0, 5.01100e-2, 0, 3.83200e-2, 0, 2.75600e-2, 0, 1.79300e-2, 0, 1.21900e-2, 0, 7.46000e-3, 0, 4.46000e-3, 0, 2.10000e-3, 0, 1.16000e-3, 0, 5.00000e-4, 0, 1.60000e-4, 0, 4.00000e-5, 0, 3.00000e-5, 0, 1.00000e-5, 0, 0, 0, 0
+
+10^6 ( 1000000) runs: 7.11800e-3, 0, 4.56370e-2, 0, 7.99470e-2, 0, 9.36100e-2, 0, 9.84850e-2, 0, 9.98770e-2, 0, 9.87600e-2, 0, 9.32490e-2, 0, 8.53550e-2, 0, 7.44420e-2, 0, 6.21760e-2, 0, 4.99410e-2, 0, 3.77830e-2, 0, 2.75140e-2, 0, 1.88340e-2, 0, 1.22060e-2, 0, 7.33800e-3, 0, 3.99700e-3, 0, 2.05000e-3, 0, 1.01800e-3, 0, 4.42000e-4, 0, 1.52000e-4, 0, 4.80000e-5, 0, 1.60000e-5, 0, 5.00000e-6, 0, 0, 0, 0
+
+10^7 (10000000) runs: 7.09130e-3, 0, 4.58752e-2, 0, 8.02648e-2, 0, 9.37406e-2, 0, 9.82049e-2, 0, 9.98977e-2, 0, 9.85509e-2, 0, 9.33529e-2, 0, 8.51095e-2, 0, 7.42697e-2, 0, 6.21975e-2, 0, 4.97821e-2, 0, 3.78442e-2, 0, 2.75308e-2, 0, 1.88655e-2, 0, 1.21856e-2, 0, 7.33110e-3, 0, 4.11240e-3, 0, 2.12690e-3, 0, 1.01870e-3, 0, 4.25000e-4, 0, 1.51600e-4, 0, 5.36000e-5, 0, 1.30000e-5, 0, 4.00000e-6, 0, 5.00000e-7, 0, 0
+```
+
+So the above output says that after 10^7 runs:
+  - 7.09130e-3 (~0.7%) of games ended with 0 cards left in the hand (the winning condition)
+  - 4.58752e-2 (~4.6%) of games ended with 1 card left in the hand
+  - 8.02648e-2 (~8.0%) of games ended with 2 cards left in the hand
+  - 9.98977e-2 (~10.0%) of games ended with 10 cards left in the hand
+  - 3.78442e-2 (~3.8%) of games ended with 24 cards left in the hand
+  - 2.12690e-3 (~0.2%) of games ended with 36 cards left in the hand
+  - 4.00000e-6 (40 of the 10^7) of games ended with 48 cards left in the hand
+  - 0 of the games ended with 52 cards left in the hand
+
+There are truly never any odd number of cards left in the hand,
+since the game starts with an even number of cards in the deck (52),
+all cards in the deck are eventually transferred to the hand,
+and only an even number of cards can be removed from the hand (2 or 4).
+
+#### Changing the number of runs
+
+If an integer n is provided, only 10^n runs of the game are played:
+
+```bash
+$ deterministic_card_game 4
+10^2 (  100) runs: 0, 0, 5.00000e-2, 0, 8.00000e-2, 0, 8.00000e-2, 0, 9.00000e-2, 0, 1.50000e-1, 0, 8.00000e-2, 0, 8.00000e-2, 0, 1.00000e-1, 0, 7.00000e-2, 0, 7.00000e-2, 0, 2.00000e-2, 0, 6.00000e-2, 0, 1.00000e-2, 0, 3.00000e-2, 0, 1.00000e-2, 0, 0, 0, 2.00000e-2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+
+10^3 ( 1000) runs: 9.00000e-3, 0, 3.90000e-2, 0, 7.10000e-2, 0, 1.09000e-1, 0, 9.80000e-2, 0, 1.07000e-1, 0, 1.06000e-1, 0, 8.50000e-2, 0, 9.80000e-2, 0, 7.40000e-2, 0, 5.90000e-2, 0, 4.30000e-2, 0, 3.30000e-2, 0, 2.40000e-2, 0, 2.20000e-2, 0, 7.00000e-3, 0, 7.00000e-3, 0, 6.00000e-3, 0, 2.00000e-3, 0, 1.00000e-3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+
+10^4 (10000) runs: 7.00000e-3, 0, 4.36000e-2, 0, 8.17000e-2, 0, 9.46000e-2, 0, 9.31000e-2, 0, 1.01600e-1, 0, 9.73000e-2, 0, 9.50000e-2, 0, 8.78000e-2, 0, 7.78000e-2, 0, 5.95000e-2, 0, 4.84000e-2, 0, 3.94000e-2, 0, 2.70000e-2, 0, 2.19000e-2, 0, 1.00000e-2, 0, 8.20000e-3, 0, 2.60000e-3, 0, 2.10000e-3, 0, 1.10000e-3, 0, 2.00000e-4, 0, 1.00000e-4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+```
+
+#### Quiet run
+
+If run with the `--quiet` or `-q` flag, the results are only printed after all runs have been played.
+For example:
+
+```bash
+$ deterministic_card_game -q
+10^7 (10000000) runs: 7.09280e-3, 0, 4.59337e-2, 0, 8.03776e-2, 0, 9.37450e-2, 0, 9.80941e-2, 0, 9.99757e-2, 0, 9.84476e-2, 0, 9.33234e-2, 0, 8.48621e-2, 0, 7.42482e-2, 0, 6.23260e-2, 0, 4.98247e-2, 0, 3.80385e-2, 0, 2.75391e-2, 0, 1.88051e-2, 0, 1.21905e-2, 0, 7.28830e-3, 0, 4.12490e-3, 0, 2.11520e-3, 0, 1.00060e-3, 0, 4.20300e-4, 0, 1.58000e-4, 0, 5.19000e-5, 0, 1.26000e-5, 0, 3.60000e-6, 0, 5.00000e-7, 0, 0
+```
+
+### Save data
+
+If run with the `--save-data` or `-s` flag, results are saved to a CSV.
+
+The number of runs at each recorded data point goes up in powers of 10,
+with each power of 10 getting 10 data points.
+For example: 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, ...
+
+[The CSV in this repository](/card_game_data/run-00001-exp-10-splits-9.csv)
+was made using this command with the following output:
+
+```bash
+$ deterministic_card_game 10 -s
+Using data file run-00001-exp-10-splits-9.csv
+Doing up to 10^10 runs.
+Done 10^2 runs. Continuing...
+Done 10^3 runs. Continuing...
+Done 10^4 runs. Continuing...
+Done 10^5 runs. Continuing...
+Done 10^6 runs. Continuing...
+Done 10^7 runs. Continuing...
+Done 10^8 runs. Continuing...
+Done 10^9 runs. Continuing...
+Finished doing all 10^10 runs.
+Data file run-00001-exp-10-splits-9.csv finished.
+Total runs: 10000000000
+```
+
+Whenever this program is run:
+
+- a new file is made in the 'card_game_data' folder of the current working directory.
+  If there is no such folder, it will request permission to create such a folder.
+  If this permission is given, it will do so and continue as normal, otherwise it will exit.
+- the new file will have a run number incremented by one.
+  For example, if the above code were run again it would save a new file called
+  "run-00002-exp-10-splits-9.csv".
+  This means that data files are never overwritten by the program.
+- each row of data in the CSV is saved to the file whenever it is calculated.
+  This means that if the program is cancelled before completion,
+  data that was already been calculated will still be in the file.
+  You can view this file even while the program is running to see what data it has outputted.
+
+#### Quiet run
+
+If run with the `--quiet` or `-q` flag, only the print if the runs finishing occurs.
+For example, the above run would have had this output if run with the `-q` flag:
+
+```bash
+$ deterministic_card_game 10 -s -q
+Data file run-00002-exp-10-splits-9.csv finished.
+```
+
+### Time elapsed
+
+The `--time-elapsed` or `-t` flag can be added to any of the other options
+to print how long the program took (in milliseconds) to run all the games that it played.
+For example:
+
+```bash
+$ deterministic_card_game 7 -s -q -t
+Data file run-00003-exp-7-splits-9.csv finished.
+Time elapsed: 6048 ms
+```
+
+Actual time taken will vary a little, and may be different on other computers
+(this example was not run on an especially fast computer).
+Also, of course, higher numbers of runs will take longer.
+Remember that the input is an exponent of a power of 10 on the number of runs to perform,
+so the time taken to complete will increase exponentially with this input value.
+
+```bash
+$ deterministic_card_game 3 -q -t
+10^3 (1000) runs: 9.00000e-3, 0, 4.90000e-2, 0, 6.80000e-2, 0, 1.04000e-1, 0, 8.40000e-2, 0, 1.00000e-1, 0, 1.00000e-1, 0, 8.50000e-2, 0, 9.10000e-2, 0, 6.70000e-2, 0, 6.20000e-2, 0, 5.10000e-2, 0, 4.50000e-2, 0, 3.30000e-2, 0, 2.30000e-2, 0, 1.40000e-2, 0, 4.00000e-3, 0, 3.00000e-3, 0, 4.00000e-3, 0, 3.00000e-3, 0, 1.00000e-3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+
+Time elapsed: 0 ms
+$ deterministic_card_game 4 -q -t
+10^4 (10000) runs: 5.70000e-3, 0, 4.38000e-2, 0, 8.34000e-2, 0, 9.58000e-2, 0, 9.28000e-2, 0, 9.71000e-2, 0, 1.00000e-1, 0, 8.91000e-2, 0, 8.56000e-2, 0, 7.48000e-2, 0, 6.27000e-2, 0, 5.24000e-2, 0, 4.03000e-2, 0, 2.97000e-2, 0, 1.84000e-2, 0, 1.19000e-2, 0, 8.20000e-3, 0, 4.80000e-3, 0, 2.00000e-3, 0, 7.00000e-4, 0, 5.00000e-4, 0, 2.00000e-4, 0, 1.00000e-4, 0, 0, 0, 0, 0, 0, 0, 0
+
+Time elapsed: 7 ms
+$ deterministic_card_game 5 -q -t
+10^5 (100000) runs: 6.75000e-3, 0, 4.58800e-2, 0, 7.97800e-2, 0, 9.40600e-2, 0, 9.83600e-2, 0, 1.00690e-1, 0, 9.82500e-2, 0, 9.26800e-2, 0, 8.44700e-2, 0, 7.40100e-2, 0, 6.26000e-2, 0, 4.97000e-2, 0, 3.84800e-2, 0, 2.71300e-2, 0, 1.95100e-2, 0, 1.22900e-2, 0, 7.19000e-3, 0, 4.05000e-3, 0, 2.33000e-3, 0, 1.11000e-3, 0, 4.50000e-4, 0, 1.50000e-4, 0, 7.00000e-5, 0, 1.00000e-5, 0, 0, 0, 0, 0, 0
+
+Time elapsed: 55 ms
+$ deterministic_card_game 6 -q -t
+10^6 (1000000) runs: 7.08200e-3, 0, 4.55340e-2, 0, 8.00610e-2, 0, 9.39230e-2, 0, 9.83450e-2, 0, 1.00396e-1, 0, 9.92630e-2, 0, 9.36400e-2, 0, 8.47670e-2, 0, 7.41300e-2, 0, 6.17220e-2, 0, 4.96080e-2, 0, 3.79550e-2, 0, 2.73020e-2, 0, 1.89090e-2, 0, 1.22140e-2, 0, 7.28600e-3, 0, 4.09100e-3, 0, 2.09200e-3, 0, 1.05000e-3, 0, 3.99000e-4, 0, 1.69000e-4, 0, 4.20000e-5, 0, 1.60000e-5, 0, 4.00000e-6, 0, 0, 0, 0
+
+Time elapsed: 588 ms
+$ deterministic_card_game 7 -q -t
+10^7 (10000000) runs: 7.10440e-3, 0, 4.59431e-2, 0, 8.02463e-2, 0, 9.37884e-2, 0, 9.82457e-2, 0, 9.98218e-2, 0, 9.84547e-2, 0, 9.33949e-2, 0, 8.49514e-2, 0, 7.42454e-2, 0, 6.23422e-2, 0, 4.98972e-2, 0, 3.79582e-2, 0, 2.74222e-2, 0, 1.87997e-2, 0, 1.21221e-2, 0, 7.37740e-3, 0, 4.11220e-3, 0, 2.10620e-3, 0, 9.97300e-4, 0, 4.33300e-4, 0, 1.63400e-4, 0, 5.57000e-5, 0, 1.31000e-5, 0, 3.50000e-6, 0, 2.00000e-7, 0, 0
+
+Time elapsed: 5907 ms
+$ deterministic_card_game 8 -q -t
+10^8 (100000000) runs: 7.07265e-3, 0, 4.59764e-2, 0, 8.02515e-2, 0, 9.38202e-2, 0, 9.82613e-2, 0, 9.98508e-2, 0, 9.85087e-2, 0, 9.32873e-2, 0, 8.49642e-2, 0, 7.42973e-2, 0, 6.22273e-2, 0, 4.97982e-2, 0, 3.79857e-2, 0, 2.75130e-2, 0, 1.88273e-2, 0, 1.21406e-2, 0, 7.32141e-3, 0, 4.10431e-3, 0, 2.12581e-3, 0, 1.00836e-3, 0, 4.24210e-4, 0, 1.61910e-4, 0, 5.31900e-5, 0, 1.45100e-5, 0, 3.36000e-6, 0, 4.50000e-7, 0, 4.00000e-8
+
+Time elapsed: 56840 ms
+```
+
+### Printing the help information
+
+The `-h` option prints the concise help information for the program.
+
+```bash
+$ deterministic_card_game -h
+Run Morgan's game from episode 120 of A Problem Squared.
+
+Usage: deterministic-card-game.exe [OPTIONS] [MAX_EXPONENT]
+
+Arguments:
+  [MAX_EXPONENT]  Exponent of 10 (10^?) for the number of runs to perform in total [default: 7]
+
+Options:
+  -s, --save-data     Save csv file of game run data
+  -q, --quiet...      Print less information (only show final results / show no result at all)
+  -t, --time-elapsed  Print the time elapsed during calulation
+  -h, --help          Print help (see more with '--help')
+  -V, --version       Print version
+```
+
+The `--help` option prints a less compact and longer help.
+
+```bash
+$ deterministic_card_game --help
+Run Morgan's game from episode 120 of A Problem Squared.
+
+Usage: deterministic-card-game.exe [OPTIONS] [MAX_EXPONENT]
+
+Arguments:
+  [MAX_EXPONENT]
+          Exponent of 10 (10^?) for the number of runs to perform in total
+
+          [default: 7]
+
+Options:
+  -s, --save-data
+          Save csv file of game run data
+
+  -q, --quiet...
+          Print less information (only show final results / show no result at all)
+
+          Give once for mostly quiet, and twice for completely quiet.
+
+          When printing results, only print results after all runs, or nothing.
+
+          When saving data, only print that data has been saved to file, or nothing.
+
+  -t, --time-elapsed
+          Print the time elapsed during calulation
+
+  -h, --help
+          Print help (see a summary with '-h')
+
+  -V, --version
+          Print version
+```
