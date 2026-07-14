@@ -251,6 +251,120 @@ $ deterministic_card_game 8 -q -e
 Time elapsed: 48729 ms
 ```
 
+### Number of threads
+
+The `--threads` or `-t` option sets the number of threads to use.
+If no value is given, the program defaults to running in 7 threads.
+It must be used with an equals sign (e.g. `-t=8`).
+
+It is very likely that using some small number of threads will increase the speed of the program.
+The optimal number of threads will vary depending on the computer that the program is run on,
+so you may want to try a few different numbers of threads along with the `--elapsed-time` flag
+to see which number of threads gives the best performance on your computer.
+For a "normal" computer, a good number of threads might be between about 6 and 20.
+
+Below are examples of different program run times for different numbers of threads.
+On the computer in this example, adding 7 threads more than quadruple the speed of the program.
+Up to about 70 threads, no additional benefit was seen,
+and above this the speed of the program started slowing again.
+With more than 8000 threads, the program was slower than with only 1 thread.
+
+
+```bash
+$ deterministic_card_game 6 -qq -e -t=1
+Time elapsed: 478 ms
+$ deterministic_card_game 6 -qq -e -t=2
+Time elapsed: 244 ms
+$ deterministic_card_game 6 -qq -e -t=3
+Time elapsed: 212 ms
+$ deterministic_card_game 6 -qq -e -t=4
+Time elapsed: 165 ms
+$ deterministic_card_game 6 -qq -e -t=5
+Time elapsed: 141 ms
+$ deterministic_card_game 6 -qq -e -t=6
+Time elapsed: 124 ms
+$ deterministic_card_game 6 -qq -e -t=7
+Time elapsed: 108 ms
+$ deterministic_card_game 6 -qq -e -t=8
+Time elapsed: 114 ms
+$ deterministic_card_game 6 -qq -e -t=9
+Time elapsed: 120 ms
+$ deterministic_card_game 6 -qq -e -t=10
+Time elapsed: 111 ms
+$ deterministic_card_game 6 -qq -e -t=11
+Time elapsed: 110 ms
+$ deterministic_card_game 6 -qq -e -t=12
+Time elapsed: 110 ms
+$ deterministic_card_game 6 -qq -e -t=13
+Time elapsed: 116 ms
+$ deterministic_card_game 6 -qq -e -t=14
+Time elapsed: 113 ms
+$ deterministic_card_game 6 -qq -e -t=15
+Time elapsed: 118 ms
+$ deterministic_card_game 6 -qq -e -t=16
+Time elapsed: 108 ms
+$ deterministic_card_game 6 -qq -e -t=17
+Time elapsed: 108 ms
+$ deterministic_card_game 6 -qq -e -t=18
+Time elapsed: 112 ms
+$ deterministic_card_game 6 -qq -e -t=19
+Time elapsed: 114 ms
+$ deterministic_card_game 6 -qq -e -t=20
+Time elapsed: 107 ms
+$ deterministic_card_game 6 -qq -e -t=30
+Time elapsed: 113 ms
+$ deterministic_card_game 6 -qq -e -t=40
+Time elapsed: 112 ms
+$ deterministic_card_game 6 -qq -e -t=50
+Time elapsed: 109 ms
+$ deterministic_card_game 6 -qq -e -t=60
+Time elapsed: 115 ms
+$ deterministic_card_game 6 -qq -e -t=70
+Time elapsed: 107 ms
+$ deterministic_card_game 6 -qq -e -t=80
+Time elapsed: 112 ms
+$ deterministic_card_game 6 -qq -e -t=90
+Time elapsed: 110 ms
+$ deterministic_card_game 6 -qq -e -t=100
+Time elapsed: 113 ms
+$ deterministic_card_game 6 -qq -e -t=200
+Time elapsed: 116 ms
+$ deterministic_card_game 6 -qq -e -t=300
+Time elapsed: 113 ms
+$ deterministic_card_game 6 -qq -e -t=400
+Time elapsed: 116 ms
+$ deterministic_card_game 6 -qq -e -t=500
+Time elapsed: 118 ms
+$ deterministic_card_game 6 -qq -e -t=600
+Time elapsed: 126 ms
+$ deterministic_card_game 6 -qq -e -t=700
+Time elapsed: 131 ms
+$ deterministic_card_game 6 -qq -e -t=800
+Time elapsed: 130 ms
+$ deterministic_card_game 6 -qq -e -t=900
+Time elapsed: 128 ms
+$ deterministic_card_game 6 -qq -e -t=1000
+Time elapsed: 131 ms
+$ deterministic_card_game 6 -qq -e -t=2000
+Time elapsed: 164 ms
+$ deterministic_card_game 6 -qq -e -t=3000
+Time elapsed: 189 ms
+$ deterministic_card_game 6 -qq -e -t=4000
+Time elapsed: 242 ms
+$ deterministic_card_game 6 -qq -e -t=5000
+Time elapsed: 279 ms
+$ deterministic_card_game 6 -qq -e -t=6000
+Time elapsed: 325 ms
+$ deterministic_card_game 6 -qq -e -t=7000
+Time elapsed: 387 ms
+$ deterministic_card_game 6 -qq -e -t=8000
+Time elapsed: 431 ms
+$ deterministic_card_game 6 -qq -e -t=9000
+Time elapsed: 486 ms
+$ deterministic_card_game 6 -qq -e -t=10000
+Time elapsed: 549 ms
+```
+
 ### Printing the help information
 
 The `-h` option prints the concise help information for the program.
