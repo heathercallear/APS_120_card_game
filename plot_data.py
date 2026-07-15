@@ -10,18 +10,30 @@ class DataPlotter:
     POSSIBLE_REMAINING_CARDS = tuple(range(53))
     FILE_REGEX = re_compile(r'run-(\d+)-exp-(\d+)-splits-(\d+).csv')
 
-    def __init__(self) -> None:
+    def __init__(self, run_number: None | int = None) -> None:
+        self.run_number = run_number
         self.read_data()
 
-    def file_sorter(self, file: Path) -> tuple[int, int, int]:
+    def file_sorter(self, file: Path) -> tuple[int | float, int, int]:
         regex_match = self.FILE_REGEX.match(file.name)
         if regex_match is None:
             # if regex does not match, sort file to the bottom of the list
             return (-1, -1, -1)
+        if self.run_number is None:
+            return (
+                int(regex_match.group(2)), # sort first by number of runs
+                int(regex_match.group(3)), # then by number of splits
+                int(regex_match.group(1)), # then by recentness of file
+            )
+        run_number_difference = self.run_number - int(regex_match.group(1))
+        # mildly disfavour lower run numbers that are as close to the desired run number
+        if 0 < run_number_difference:
+            run_number_difference = -run_number_difference + 0.5
+        # is mostly intended to sort desired run number to the end of the list
         return (
-            int(regex_match.group(2)), # sort first by number of runs
-            int(regex_match.group(1)), # then by number of splits
-            int(regex_match.group(3)), # then by recentness of file
+            run_number_difference, # sort first by closeness to desired run number
+            int(regex_match.group(2)), # then by number of runs
+            int(regex_match.group(3)), # then by number of splits
         )
 
     def read_data(self) -> None:
@@ -140,12 +152,19 @@ if __name__ == '__main__':
         help='Number of cards left in the hand at the end of a game.'
     )
     parser.add_argument(
+        '--run-number',
+        nargs='?',
+        default=None,
+        type=int,
+        help='Run number of data file to read.'
+    )
+    parser.add_argument(
         '--version',
         action='version',
         version='%(prog)s v0.3.0',
     )
     parsed = parser.parse_args()
-    dp = DataPlotter()
+    dp = DataPlotter(parsed.run_number)
     if parsed.number_of_cards is None:
         dp.show_data(with_root_2_ish=True)
     else:
