@@ -78,6 +78,12 @@ $ python plot_data.py
 
 ## Usage of the data generation code
 
+Data from runs is saved in the [card_game_data](/card_game_data) folder.
+There are some CSVs in that folder in this repository that were generated using this code.
+This is the data used by plot_data.py when making graphs.
+
+All of the data generation code is written in [Rust](https://rust-lang.org/).
+
 ### Running the executable
 
 If running using `cargo`, use the `--release` option for improved speed:
