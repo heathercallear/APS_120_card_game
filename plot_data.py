@@ -152,14 +152,14 @@ if __name__ == '__main__':
         help='Number of cards left in the hand at the end of a game.'
     )
     parser.add_argument(
-        '--run-number',
+        '-r', '--run-number',
         nargs='?',
         default=None,
         type=int,
         help='Run number of data file to read.'
     )
     parser.add_argument(
-        '--version',
+        '-v', '--version',
         action='version',
         version='%(prog)s v0.3.0',
     )
