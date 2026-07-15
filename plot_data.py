@@ -156,7 +156,7 @@ if __name__ == '__main__':
         nargs='?',
         default=None,
         type=int,
-        help='Run number of data file to read.'
+        help='Run number of data file to read. Defaults to data file with the most runs and splits.'
     )
     parser.add_argument(
         '-v', '--version',
