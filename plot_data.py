@@ -131,6 +131,35 @@ class DataPlotter:
         )
         plt.show(block=block)
 
+    def plot_bar(self, log: bool = False) -> None:
+        x = tuple(range(0, 53, 2))
+        final_estimates = list(tuple(self.float_data.values())[-1])
+        if log:
+            for i, final_estimate in enumerate(final_estimates):
+                if final_estimate == 0:
+                    pass
+                else:
+                    final_estimates[i] = log10(final_estimate)
+        heights = tuple(
+            final_estimates[i]
+            for i in x
+        )
+        plt.bar(
+            x,
+            heights,
+            color = 'k',
+        )
+        plt.title('Probability distribution of possible game endings')
+        plt.xlabel('Number of cards remaining in the hand at the end of the game')
+        if log:
+            plt.ylabel('log10(Probability of occurring)')
+        else:
+            plt.ylabel('Probability of occurring')
+
+    def show_bar(self, log: bool = False) -> None:
+        self.plot_bar(log=log)
+        plt.show()
+
 if __name__ == '__main__':
     parser = ArgumentParser(
         prog='deterministic_card_game',
@@ -159,13 +188,28 @@ if __name__ == '__main__':
         help='Run number of data file to read. Defaults to data file with the most runs and splits.'
     )
     parser.add_argument(
+        '-b', '--bar',
+        default=False,
+        action='store_true',
+        help='Plot bar chart of probability of each game ending.'
+    )
+    parser.add_argument(
+        '--bar-log',
+        default=False,
+        action='store_true',
+        help='Plot bar chart of log10(probability of each game ending).'
+    )
+    parser.add_argument(
         '-v', '--version',
         action='version',
         version='%(prog)s v0.4.1',
     )
     parsed = parser.parse_args()
     dp = DataPlotter(parsed.run_number)
-    if parsed.number_of_cards is None:
-        dp.show_data(with_root_2_ish=True)
+    if parsed.bar or parsed.bar_log:
+        dp.show_bar(parsed.bar_log)
     else:
-        dp.show_data(parsed.number_of_cards)
+        if parsed.number_of_cards is None:
+            dp.show_data(with_root_2_ish=True)
+        else:
+            dp.show_data(parsed.number_of_cards)
