@@ -1,0 +1,59 @@
+name: Compile in various os and add to release
+on:
+  release:
+    types:
+      - created
+
+permissions:
+  contents: write
+
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Run all tests
+        run: cargo test
+
+  AddReleaseAssets:
+    needs: [Test]
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+          - os: macos-latest
+            target: aarch64-apple-darwin
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Add target
+        run: rustup target add ${{ matrix.target }}
+
+      - name: Build release
+        run: cargo build --release --target ${{ matrix.target }}
+
+      - name: Make zip archive [Windows]
+        if: matrix.os == 'windows-latest'
+        run: |
+          cd target/${{ matrix.target }}/release
+          7z a ../../../deterministic-card-game-${{ matrix.target }} deterministic-card-game.exe
+          cd -
+
+      - name: Make zip archive [not Windows]
+        if: matrix.os != 'windows-latest'
+        run: |
+          cd target/${{ matrix.target }}/release
+          tar czvf ../../../deterministic-card-game-${{ matrix.target }}.tar.gz deterministic-card-game
+          cd -
+
+      - name: Add asset to release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: deterministic-card-game-${{ matrix.target }}.*
