@@ -7,7 +7,7 @@ use crate::card::{Card, Deck};
 /// ```
 /// use deterministic_card_game::Game;
 ///
-/// let mut game = Game::new();
+/// let mut game = Game::new(4);
 ///
 /// game.play_games(100);
 ///
@@ -142,7 +142,7 @@ impl Game {
     /// ```
     /// use deterministic_card_game::Game;
     ///
-    /// let mut game = Game::new();
+    /// let mut game = Game::new(4);
     /// game.play_games(100);
     /// println!("Proportion of games won: {}", game.get_results_proportion()[0]);
     /// ```
