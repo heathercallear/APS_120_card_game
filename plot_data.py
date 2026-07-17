@@ -161,7 +161,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '-v', '--version',
         action='version',
-        version='%(prog)s v0.4.0',
+        version='%(prog)s v0.4.1',
     )
     parsed = parser.parse_args()
     dp = DataPlotter(parsed.run_number)
