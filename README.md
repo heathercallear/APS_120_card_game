@@ -100,7 +100,8 @@ $ python plot_data.py --bar
 
 Which plots this graph:
 
-![A bar chart of probability of occurring against the number of cards left in the hand at the end of a game. It looks similar to a normal curve with a mean at 10 cards left in the hand, and which hurries to get small left of the mean. All odd numbers of cards have a probability of 0. Starts at about 0.7% for 0 cards, 4.6% for 2 cards, and 8.0% for 4 cards. After this, the bars appear to match a normal curve quite well, peaking at 10.0% for 10 cards, and going down to 8.5% by 16 cards, 6.2% by 20 cards, and 3.8% by 24 cards. After 40 cards, the bars are too small to be visible.](/img/run-00017-plot-bar-chart.svg)
+![A bar chart of probability of occurring against the number of cards left in the hand at the end of a game. It looks similar to a normal curve with a mean at 10 cards left in the hand, and which hurries to get small left of the mean. All odd numbers of cards have a probability of 0. Starts at about 0.7% for 0 cards, 4.6% for 2 cards, and 8.0% for 4 cards. After this, the bars appear to match a normal curve quite well, peaking at 10.0% for 10 cards, and going down to 8.5% by 16 cards, 6.2% by 20 cards, and 3.8% by 24 cards. After 40 cards, the bars are too small to be visible.](/img/run-00017-plot-bar-chart.svg#gh-light-mode-only)
+![A bar chart of probability of occurring against the number of cards left in the hand at the end of a game. It looks similar to a normal curve with a mean at 10 cards left in the hand, and which hurries to get small left of the mean. All odd numbers of cards have a probability of 0. Starts at about 0.7% for 0 cards, 4.6% for 2 cards, and 8.0% for 4 cards. After this, the bars appear to match a normal curve quite well, peaking at 10.0% for 10 cards, and going down to 8.5% by 16 cards, 6.2% by 20 cards, and 3.8% by 24 cards. After 40 cards, the bars are too small to be visible.](/img/run-00017-plot-bar-chart-dark.svg#gh-dark-mode-only)
 
 The height of each bar (that has any height) given to a precision of ±10^-7 is:
 
@@ -146,7 +147,8 @@ simply run `plot_data.py` with no arguments:
 $ python plot_data.py
 ```
 
-![Log-log plot comparing convergence of the proportion of won games to its final result versus to 1/100sqrt(2). Until about 10^6 to 10^8 runs, both plots look very similar, steadily (if jaggedly) decreasing. After this, the convergence to 1/100sqrt(2) stays at about 10^-5 difference from the data. However, the convergence to the final result continues to jaggedly decrease down to roughly 10^-7.5 difference from the data after 10^12 runs.](/img/run-00017-plot-__-cards-left.svg)
+![Log-log plot comparing convergence of the proportion of won games to its final result versus to 1/100sqrt(2). Until about 10^6 to 10^8 runs, both plots look very similar, steadily (if jaggedly) decreasing. After this, the convergence to 1/100sqrt(2) stays at about 10^-5 difference from the data. However, the convergence to the final result continues to jaggedly decrease down to roughly 10^-7.5 difference from the data after 10^12 runs.](/img/run-00017-plot-__-cards-left.svg#gh-light-mode-only)
+![Log-log plot comparing convergence of the proportion of won games to its final result versus to 1/100sqrt(2). Until about 10^6 to 10^8 runs, both plots look very similar, steadily (if jaggedly) decreasing. After this, the convergence to 1/100sqrt(2) stays at about 10^-5 difference from the data. However, the convergence to the final result continues to jaggedly decrease down to roughly 10^-7.5 difference from the data after 10^12 runs.](/img/run-00017-plot-__-cards-left-dark.svg#gh-dark-mode-only)
 
 The difference between $`\frac{1}{100\sqrt{2}}`$ and the final value eventually flattens off at about 10^-5.
 This shows that the proportion of won games does not converge to $`\frac{1}{100\sqrt{2}}`$,
