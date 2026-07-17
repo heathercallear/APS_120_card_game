@@ -84,6 +84,15 @@ This is the data used by plot_data.py when making graphs.
 
 All of the data generation code is written in [Rust](https://rust-lang.org/).
 
+Roughly speaking, each run takes 160–180 ns.
+So 10^7 runs takes about 1.7 seconds,
+10^8 runs takes about 17 seconds,
+10^9 runs takes about 2 minutes 50 seconds,
+10^10 runs takes about 28 minutes,
+10^11 runs takes about 4¾ hours,
+and 10^12 runs takes about 1 day and 23 hours.
+These times are based on running this program on an alright but not especially fast computer with 4 CPU cores.
+
 ### Running the executable
 
 If running using `cargo`, use the `--release` option for improved speed:
