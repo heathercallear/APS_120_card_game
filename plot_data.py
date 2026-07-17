@@ -10,8 +10,14 @@ class DataPlotter:
     POSSIBLE_REMAINING_CARDS = tuple(range(53))
     FILE_REGEX = re_compile(r'run-(\d+)-exp-(\d+)-splits-(\d+).csv')
 
-    def __init__(self, run_number: None | int = None) -> None:
+    def __init__(self, run_number: None | int = None, dark: bool = False) -> None:
         self.run_number = run_number
+        if dark:
+            self.color = 'w'
+            self.other_color = 'red'
+        else:
+            self.color = 'k'
+            self.other_color = 'darkred'
         self.read_data()
 
     def file_sorter(self, file: Path) -> tuple[int | float, int, int]:
@@ -91,7 +97,7 @@ class DataPlotter:
                 results[cards_left_in_hand]
                 for results in self.log_difference_data.values()
             ),
-            'k',
+            self.color,
             label=f'to {final_result:.5e}',
         )
         if with_root_2_ish:
@@ -112,7 +118,7 @@ class DataPlotter:
                 log10(abs(results[0] - root_2_ish))
                 for results in self.float_data.values()
             ),
-            'darkred',
+            self.other_color,
             label=f'to {root_2_ish:.5e} [1/100sqrt(2)]',
         )
         plt.title(f'Convergence of the proportion of games won on 1/100sqrt(2)')
@@ -147,7 +153,7 @@ class DataPlotter:
         plt.bar(
             x,
             heights,
-            color = 'k',
+            color = self.color,
         )
         plt.xticks(x)
         plt.title('Probability distribution of possible game endings')
@@ -201,12 +207,20 @@ if __name__ == '__main__':
         help='Plot bar chart of log10(probability of each game ending).'
     )
     parser.add_argument(
+        '-d', '--dark',
+        default=False,
+        action='store_true',
+        help='Use dark theme (white on black).'
+    )
+    parser.add_argument(
         '-v', '--version',
         action='version',
         version='%(prog)s v0.4.1',
     )
     parsed = parser.parse_args()
-    dp = DataPlotter(parsed.run_number)
+    if parsed.dark:
+        plt.style.use('dark_background')
+    dp = DataPlotter(parsed.run_number, dark = parsed.dark)
     if parsed.bar or parsed.bar_log:
         dp.show_bar(parsed.bar_log)
     else:
