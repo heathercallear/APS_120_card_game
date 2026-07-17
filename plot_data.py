@@ -149,6 +149,7 @@ class DataPlotter:
             heights,
             color = 'k',
         )
+        plt.xticks(x)
         plt.title('Probability distribution of possible game endings')
         plt.xlabel('Number of cards remaining in the hand at the end of the game')
         if log:
