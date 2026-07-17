@@ -168,7 +168,9 @@ The number of runs at each recorded data point goes up in powers of 10,
 with each power of 10 getting 10 data points.
 For example: 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, ...
 
-[The CSV in this repository](/card_game_data/run-00010-exp-11-splits-9.csv)
+The CSVs in this repository (in the [card_game_data folder](/card_game_data/))
+were all produced using this flag.
+For example, [this CSV](/card_game_data/run-00010-exp-11-splits-9.csv)
 was made using this command with the following output:
 
 ```bash
