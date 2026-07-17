@@ -1,6 +1,6 @@
 # Deterministic Card Game
 
-`deterministic_card_game` provides an implementation of the card game
+`deterministic-card-game` provides an implementation of the card game
 described in episode 120 of "A Problem Squared"
 
 ## The rules of the game
@@ -48,20 +48,23 @@ so if you just want to see graphs, feel free to skip to the next section.
 
 Any new data generated is saved as a new CSV file in this same folder.
 
-The code can either be run directly from an executable,
+The code can either be run directly from an executable
+(see [the latest release](/releases/latest)),
 or by installing [Rust](https://rust-lang.org/) and
 using `cargo run --release -- ` from within this repository's folder.
 
 To generate data for $`10^m`$ played games, run:
 
 ```bash
-$ deterministic_card_game -s m
+$ deterministic-card-game -s m
 ```
+
+If on Windows, the executable will instead be called "deterministic-card-game.exe".
 
 For example, to generate data for 10,000,000 (10^7) runs:
 
 ```bash
-$ deterministic_card_game -s 7
+$ deterministic-card-game -s 7
 ```
 
 Or, equivalently, if running from within this repository after installing Rust:
@@ -217,7 +220,7 @@ $ cargo run --release --
 The rest of the examples will instead directly run the executable that this generates.
 
 ```bash
-$ deterministic_card_game
+$ deterministic-card-game
 ```
 
 These two methods of running the program are equivalent.
@@ -230,7 +233,7 @@ with the proportion of games that have ended in each number of hands printed at 
 For example:
 
 ```bash
-$ deterministic_card_game
+$ deterministic-card-game
 10^2 (     100) runs: 1.00000e-2, 0, 3.00000e-2, 0, 5.00000e-2, 0, 1.00000e-1, 0, 1.10000e-1, 0, 1.20000e-1, 0, 5.00000e-2, 0, 7.00000e-2, 0, 1.90000e-1, 0, 5.00000e-2, 0, 4.00000e-2, 0, 6.00000e-2, 0, 4.00000e-2, 0, 2.00000e-2, 0, 3.00000e-2, 0, 1.00000e-2, 0, 2.00000e-2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 10^3 (    1000) runs: 5.00000e-3, 0, 5.40000e-2, 0, 7.20000e-2, 0, 9.50000e-2, 0, 9.50000e-2, 0, 1.12000e-1, 0, 9.70000e-2, 0, 8.00000e-2, 0, 1.01000e-1, 0, 7.50000e-2, 0, 6.30000e-2, 0, 4.50000e-2, 0, 3.60000e-2, 0, 2.70000e-2, 0, 1.30000e-2, 0, 1.10000e-2, 0, 1.20000e-2, 0, 2.00000e-3, 0, 3.00000e-3, 0, 2.00000e-3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -264,7 +267,7 @@ and only an even number of cards can be removed from the hand (2 or 4).
 If an integer n is provided, only 10^n runs of the game are played:
 
 ```bash
-$ deterministic_card_game 4
+$ deterministic-card-game 4
 10^2 (  100) runs: 0, 0, 5.00000e-2, 0, 8.00000e-2, 0, 8.00000e-2, 0, 9.00000e-2, 0, 1.50000e-1, 0, 8.00000e-2, 0, 8.00000e-2, 0, 1.00000e-1, 0, 7.00000e-2, 0, 7.00000e-2, 0, 2.00000e-2, 0, 6.00000e-2, 0, 1.00000e-2, 0, 3.00000e-2, 0, 1.00000e-2, 0, 0, 0, 2.00000e-2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 10^3 ( 1000) runs: 9.00000e-3, 0, 3.90000e-2, 0, 7.10000e-2, 0, 1.09000e-1, 0, 9.80000e-2, 0, 1.07000e-1, 0, 1.06000e-1, 0, 8.50000e-2, 0, 9.80000e-2, 0, 7.40000e-2, 0, 5.90000e-2, 0, 4.30000e-2, 0, 3.30000e-2, 0, 2.40000e-2, 0, 2.20000e-2, 0, 7.00000e-3, 0, 7.00000e-3, 0, 6.00000e-3, 0, 2.00000e-3, 0, 1.00000e-3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -278,7 +281,7 @@ If run with the `--quiet` or `-q` flag, the results are only printed after all r
 For example:
 
 ```bash
-$ deterministic_card_game -q
+$ deterministic-card-game -q
 10^7 (10000000) runs: 7.09280e-3, 0, 4.59337e-2, 0, 8.03776e-2, 0, 9.37450e-2, 0, 9.80941e-2, 0, 9.99757e-2, 0, 9.84476e-2, 0, 9.33234e-2, 0, 8.48621e-2, 0, 7.42482e-2, 0, 6.23260e-2, 0, 4.98247e-2, 0, 3.80385e-2, 0, 2.75391e-2, 0, 1.88051e-2, 0, 1.21905e-2, 0, 7.28830e-3, 0, 4.12490e-3, 0, 2.11520e-3, 0, 1.00060e-3, 0, 4.20300e-4, 0, 1.58000e-4, 0, 5.19000e-5, 0, 1.26000e-5, 0, 3.60000e-6, 0, 5.00000e-7, 0, 0
 ```
 
@@ -296,7 +299,7 @@ For example, [this CSV](/card_game_data/run-00010-exp-11-splits-9.csv)
 was made using this command with the following output:
 
 ```bash
-$ deterministic_card_game 11 -s -e
+$ deterministic-card-game 11 -s -e
 Using data file run-00010-exp-11-splits-9.csv
 Doing up to 10^11 runs.
 Done 10^2 runs. Continuing...
@@ -334,7 +337,7 @@ If run with the `--quiet` or `-q` flag, only the print if the runs finishing occ
 For example, the above run would have had this output if run with the `-q` flag:
 
 ```bash
-$ deterministic_card_game 10 -s -q
+$ deterministic-card-game 10 -s -q
 Data file run-00002-exp-10-splits-9.csv finished.
 ```
 
@@ -345,7 +348,7 @@ to print how long the program took (in milliseconds) to run all the games that i
 For example:
 
 ```bash
-$ deterministic_card_game 7 -s -q -e
+$ deterministic-card-game 7 -s -q -e
 Data file run-00003-exp-7-splits-9.csv finished.
 Time elapsed: 1340 ms
 ```
@@ -357,27 +360,27 @@ Remember that the input is an exponent of a power of 10 on the number of runs to
 so the time taken to complete will increase exponentially with this input value.
 
 ```bash
-$ deterministic_card_game 3 -q -e
+$ deterministic-card-game 3 -q -e
 10^3 (1000) runs: 9.00000e-3, 0, 4.90000e-2, 0, 6.80000e-2, 0, 1.04000e-1, 0, 8.40000e-2, 0, 1.00000e-1, 0, 1.00000e-1, 0, 8.50000e-2, 0, 9.10000e-2, 0, 6.70000e-2, 0, 6.20000e-2, 0, 5.10000e-2, 0, 4.50000e-2, 0, 3.30000e-2, 0, 2.30000e-2, 0, 1.40000e-2, 0, 4.00000e-3, 0, 3.00000e-3, 0, 4.00000e-3, 0, 3.00000e-3, 0, 1.00000e-3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 Time elapsed: 0 ms
-$ deterministic_card_game 4 -q -e
+$ deterministic-card-game 4 -q -e
 10^4 (10000) runs: 5.70000e-3, 0, 4.38000e-2, 0, 8.34000e-2, 0, 9.58000e-2, 0, 9.28000e-2, 0, 9.71000e-2, 0, 1.00000e-1, 0, 8.91000e-2, 0, 8.56000e-2, 0, 7.48000e-2, 0, 6.27000e-2, 0, 5.24000e-2, 0, 4.03000e-2, 0, 2.97000e-2, 0, 1.84000e-2, 0, 1.19000e-2, 0, 8.20000e-3, 0, 4.80000e-3, 0, 2.00000e-3, 0, 7.00000e-4, 0, 5.00000e-4, 0, 2.00000e-4, 0, 1.00000e-4, 0, 0, 0, 0, 0, 0, 0, 0
 
 Time elapsed: 2 ms
-$ deterministic_card_game 5 -q -e
+$ deterministic-card-game 5 -q -e
 10^5 (100000) runs: 6.75000e-3, 0, 4.58800e-2, 0, 7.97800e-2, 0, 9.40600e-2, 0, 9.83600e-2, 0, 1.00690e-1, 0, 9.82500e-2, 0, 9.26800e-2, 0, 8.44700e-2, 0, 7.40100e-2, 0, 6.26000e-2, 0, 4.97000e-2, 0, 3.84800e-2, 0, 2.71300e-2, 0, 1.95100e-2, 0, 1.22900e-2, 0, 7.19000e-3, 0, 4.05000e-3, 0, 2.33000e-3, 0, 1.11000e-3, 0, 4.50000e-4, 0, 1.50000e-4, 0, 7.00000e-5, 0, 1.00000e-5, 0, 0, 0, 0, 0, 0
 
 Time elapsed: 13 ms
-$ deterministic_card_game 6 -q -e
+$ deterministic-card-game 6 -q -e
 10^6 (1000000) runs: 7.08200e-3, 0, 4.55340e-2, 0, 8.00610e-2, 0, 9.39230e-2, 0, 9.83450e-2, 0, 1.00396e-1, 0, 9.92630e-2, 0, 9.36400e-2, 0, 8.47670e-2, 0, 7.41300e-2, 0, 6.17220e-2, 0, 4.96080e-2, 0, 3.79550e-2, 0, 2.73020e-2, 0, 1.89090e-2, 0, 1.22140e-2, 0, 7.28600e-3, 0, 4.09100e-3, 0, 2.09200e-3, 0, 1.05000e-3, 0, 3.99000e-4, 0, 1.69000e-4, 0, 4.20000e-5, 0, 1.60000e-5, 0, 4.00000e-6, 0, 0, 0, 0
 
 Time elapsed: 116 ms
-$ deterministic_card_game 7 -q -e
+$ deterministic-card-game 7 -q -e
 10^7 (10000000) runs: 7.10440e-3, 0, 4.59431e-2, 0, 8.02463e-2, 0, 9.37884e-2, 0, 9.82457e-2, 0, 9.98218e-2, 0, 9.84547e-2, 0, 9.33949e-2, 0, 8.49514e-2, 0, 7.42454e-2, 0, 6.23422e-2, 0, 4.98972e-2, 0, 3.79582e-2, 0, 2.74222e-2, 0, 1.87997e-2, 0, 1.21221e-2, 0, 7.37740e-3, 0, 4.11220e-3, 0, 2.10620e-3, 0, 9.97300e-4, 0, 4.33300e-4, 0, 1.63400e-4, 0, 5.57000e-5, 0, 1.31000e-5, 0, 3.50000e-6, 0, 2.00000e-7, 0, 0
 
 Time elapsed: 1170 ms
-$ deterministic_card_game 8 -q -e
+$ deterministic-card-game 8 -q -e
 10^8 (100000000) runs: 7.07265e-3, 0, 4.59764e-2, 0, 8.02515e-2, 0, 9.38202e-2, 0, 9.82613e-2, 0, 9.98508e-2, 0, 9.85087e-2, 0, 9.32873e-2, 0, 8.49642e-2, 0, 7.42973e-2, 0, 6.22273e-2, 0, 4.97982e-2, 0, 3.79857e-2, 0, 2.75130e-2, 0, 1.88273e-2, 0, 1.21406e-2, 0, 7.32141e-3, 0, 4.10431e-3, 0, 2.12581e-3, 0, 1.00836e-3, 0, 4.24210e-4, 0, 1.61910e-4, 0, 5.31900e-5, 0, 1.45100e-5, 0, 3.36000e-6, 0, 4.50000e-7, 0, 4.00000e-8
 
 Time elapsed: 11686 ms
@@ -409,97 +412,97 @@ and above this the speed of the program started slowing again.
 With more than 8000 threads, the program was slower than with only 1 thread.
 
 ```bash
-$ deterministic_card_game 6 -qq -e -t=1
+$ deterministic-card-game 6 -qq -e -t=1
 Time elapsed: 478 ms
-$ deterministic_card_game 6 -qq -e -t=2
+$ deterministic-card-game 6 -qq -e -t=2
 Time elapsed: 244 ms
-$ deterministic_card_game 6 -qq -e -t=3
+$ deterministic-card-game 6 -qq -e -t=3
 Time elapsed: 212 ms
-$ deterministic_card_game 6 -qq -e -t=4
+$ deterministic-card-game 6 -qq -e -t=4
 Time elapsed: 165 ms
-$ deterministic_card_game 6 -qq -e -t=5
+$ deterministic-card-game 6 -qq -e -t=5
 Time elapsed: 141 ms
-$ deterministic_card_game 6 -qq -e -t=6
+$ deterministic-card-game 6 -qq -e -t=6
 Time elapsed: 124 ms
-$ deterministic_card_game 6 -qq -e -t=7
+$ deterministic-card-game 6 -qq -e -t=7
 Time elapsed: 108 ms
-$ deterministic_card_game 6 -qq -e -t=8
+$ deterministic-card-game 6 -qq -e -t=8
 Time elapsed: 114 ms
-$ deterministic_card_game 6 -qq -e -t=9
+$ deterministic-card-game 6 -qq -e -t=9
 Time elapsed: 120 ms
-$ deterministic_card_game 6 -qq -e -t=10
+$ deterministic-card-game 6 -qq -e -t=10
 Time elapsed: 111 ms
-$ deterministic_card_game 6 -qq -e -t=11
+$ deterministic-card-game 6 -qq -e -t=11
 Time elapsed: 110 ms
-$ deterministic_card_game 6 -qq -e -t=12
+$ deterministic-card-game 6 -qq -e -t=12
 Time elapsed: 110 ms
-$ deterministic_card_game 6 -qq -e -t=13
+$ deterministic-card-game 6 -qq -e -t=13
 Time elapsed: 116 ms
-$ deterministic_card_game 6 -qq -e -t=14
+$ deterministic-card-game 6 -qq -e -t=14
 Time elapsed: 113 ms
-$ deterministic_card_game 6 -qq -e -t=15
+$ deterministic-card-game 6 -qq -e -t=15
 Time elapsed: 118 ms
-$ deterministic_card_game 6 -qq -e -t=16
+$ deterministic-card-game 6 -qq -e -t=16
 Time elapsed: 108 ms
-$ deterministic_card_game 6 -qq -e -t=17
+$ deterministic-card-game 6 -qq -e -t=17
 Time elapsed: 108 ms
-$ deterministic_card_game 6 -qq -e -t=18
+$ deterministic-card-game 6 -qq -e -t=18
 Time elapsed: 112 ms
-$ deterministic_card_game 6 -qq -e -t=19
+$ deterministic-card-game 6 -qq -e -t=19
 Time elapsed: 114 ms
-$ deterministic_card_game 6 -qq -e -t=20
+$ deterministic-card-game 6 -qq -e -t=20
 Time elapsed: 107 ms
-$ deterministic_card_game 6 -qq -e -t=30
+$ deterministic-card-game 6 -qq -e -t=30
 Time elapsed: 113 ms
-$ deterministic_card_game 6 -qq -e -t=40
+$ deterministic-card-game 6 -qq -e -t=40
 Time elapsed: 112 ms
-$ deterministic_card_game 6 -qq -e -t=50
+$ deterministic-card-game 6 -qq -e -t=50
 Time elapsed: 109 ms
-$ deterministic_card_game 6 -qq -e -t=60
+$ deterministic-card-game 6 -qq -e -t=60
 Time elapsed: 115 ms
-$ deterministic_card_game 6 -qq -e -t=70
+$ deterministic-card-game 6 -qq -e -t=70
 Time elapsed: 107 ms
-$ deterministic_card_game 6 -qq -e -t=80
+$ deterministic-card-game 6 -qq -e -t=80
 Time elapsed: 112 ms
-$ deterministic_card_game 6 -qq -e -t=90
+$ deterministic-card-game 6 -qq -e -t=90
 Time elapsed: 110 ms
-$ deterministic_card_game 6 -qq -e -t=100
+$ deterministic-card-game 6 -qq -e -t=100
 Time elapsed: 113 ms
-$ deterministic_card_game 6 -qq -e -t=200
+$ deterministic-card-game 6 -qq -e -t=200
 Time elapsed: 116 ms
-$ deterministic_card_game 6 -qq -e -t=300
+$ deterministic-card-game 6 -qq -e -t=300
 Time elapsed: 113 ms
-$ deterministic_card_game 6 -qq -e -t=400
+$ deterministic-card-game 6 -qq -e -t=400
 Time elapsed: 116 ms
-$ deterministic_card_game 6 -qq -e -t=500
+$ deterministic-card-game 6 -qq -e -t=500
 Time elapsed: 118 ms
-$ deterministic_card_game 6 -qq -e -t=600
+$ deterministic-card-game 6 -qq -e -t=600
 Time elapsed: 126 ms
-$ deterministic_card_game 6 -qq -e -t=700
+$ deterministic-card-game 6 -qq -e -t=700
 Time elapsed: 131 ms
-$ deterministic_card_game 6 -qq -e -t=800
+$ deterministic-card-game 6 -qq -e -t=800
 Time elapsed: 130 ms
-$ deterministic_card_game 6 -qq -e -t=900
+$ deterministic-card-game 6 -qq -e -t=900
 Time elapsed: 128 ms
-$ deterministic_card_game 6 -qq -e -t=1000
+$ deterministic-card-game 6 -qq -e -t=1000
 Time elapsed: 131 ms
-$ deterministic_card_game 6 -qq -e -t=2000
+$ deterministic-card-game 6 -qq -e -t=2000
 Time elapsed: 164 ms
-$ deterministic_card_game 6 -qq -e -t=3000
+$ deterministic-card-game 6 -qq -e -t=3000
 Time elapsed: 189 ms
-$ deterministic_card_game 6 -qq -e -t=4000
+$ deterministic-card-game 6 -qq -e -t=4000
 Time elapsed: 242 ms
-$ deterministic_card_game 6 -qq -e -t=5000
+$ deterministic-card-game 6 -qq -e -t=5000
 Time elapsed: 279 ms
-$ deterministic_card_game 6 -qq -e -t=6000
+$ deterministic-card-game 6 -qq -e -t=6000
 Time elapsed: 325 ms
-$ deterministic_card_game 6 -qq -e -t=7000
+$ deterministic-card-game 6 -qq -e -t=7000
 Time elapsed: 387 ms
-$ deterministic_card_game 6 -qq -e -t=8000
+$ deterministic-card-game 6 -qq -e -t=8000
 Time elapsed: 431 ms
-$ deterministic_card_game 6 -qq -e -t=9000
+$ deterministic-card-game 6 -qq -e -t=9000
 Time elapsed: 486 ms
-$ deterministic_card_game 6 -qq -e -t=10000
+$ deterministic-card-game 6 -qq -e -t=10000
 Time elapsed: 549 ms
 ```
 
@@ -508,7 +511,7 @@ Time elapsed: 549 ms
 The `-h` option prints the concise help information for the program.
 
 ```bash
-$ deterministic_card_game -h
+$ deterministic-card-game -h
 Run Morgan's game from episode 120 of A Problem Squared.
 
 Usage: deterministic-card-game.exe [OPTIONS] [MAX_EXPONENT]
@@ -528,7 +531,7 @@ Options:
 The `--help` option prints a less compact and longer help.
 
 ```bash
-$ deterministic_card_game --help
+$ deterministic-card-game --help
 Run Morgan's game from episode 120 of A Problem Squared.
 
 Usage: deterministic-card-game.exe [OPTIONS] [MAX_EXPONENT]
