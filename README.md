@@ -87,8 +87,33 @@ It also requires the [`matplotlib`](https://matplotlib.org/stable/index.html) mo
 $ pip install matplotlib
 ```
 
+#### Probability bar chart
+
+To plot a bar chart of how likely it is that a game ends with each number of cards remaining in the hand,
+use `plot_data.py --bar`.
+
+For example:
+
+```bash
+$ python plot_data.py --bar
+```
+
+Which plots this graph:
+
+![A bar chart of probability of occurring against the number of cards left in the hand at the end of a game. It looks similar to a normal curve with a mean at 10 cards left in the hand, and which hurries to get small left of the mean. All odd numbers of cards have a probability of 0. Starts at about 0.7% for 0 cards, 4.6% for 2 cards, and 8.0% for 4 cards. After this, the bars appear to match a normal curve quite well, peaking at 10.0% for 10 cards, and going down to 8.5% by 16 cards, 6.2% by 20 cards, and 3.8% by 24 cards. After 40 cards, the bars are too small to be visible.](/img/run-00017-plot-bar-chart.svg)
+
+The height of each bar (that has any height) given to a precision of ±10^-7 is:
+
+ 0: 0.70631%,  2: 4.59674%,  4: 8.02697%,  6: 9.38143%,  8: 9.82110%, 10: 9.98573%,
+12: 9.85465%, 14: 9.33140%, 16: 8.49678%, 18: 7.42929%, 20: 6.22316%, 22: 4.98090%,
+24: 3.79801%, 26: 2.74979%, 28: 1.88276%, 30: 1.21344%, 32: 0.73206%, 34: 0.41066%,
+36: 0.21248%, 38: 0.10039%, 40: 0.04275%, 42: 0.01613%, 44: 0.00527%, 46: 0.00144%,
+48: 0.00031%, 50: 0.00005%, 52: 0.00000%'
+
+#### Convergence plot
+
 Plots a log-log graph showing the convergence of the proportion of games that
-end with a certain number of cards in the hand
+end with a certain number of cards in the hand.
 
 The final value reached after all the runs is used as an estimate of the true probability
 of finishing a game with a certain number of cards in the hand.
