@@ -280,14 +280,20 @@ It is very likely that using some small number of threads will increase the spee
 The optimal number of threads will vary depending on the computer that the program is run on,
 so you may want to try a few different numbers of threads along with the `--elapsed-time` flag
 to see which number of threads gives the best performance on your computer.
-For a "normal" computer, a good number of threads might be between about 6 and 20.
+
+In general, the speed of the program will roughly be multiplied by the number of threads,
+up until the number of threads exceeds the number of CPU cores that your computer has
+(as each CPU core is sort of its own little computer running its own games
+at the same time as the other CPU cores),
+as long as the computer isn't busy using its computing power for something else.
+For a "normal" computer, a good number of threads might be between about 4 and 20.
 
 Below are examples of different program run times for different numbers of threads.
-On the computer in this example, adding 7 threads more than quadruple the speed of the program.
+On the computer in this example (which had 4 CPU cores),
+adding 7 threads more than quadrupled the speed of the program.
 Up to about 70 threads, no additional benefit was seen,
 and above this the speed of the program started slowing again.
 With more than 8000 threads, the program was slower than with only 1 thread.
-
 
 ```bash
 $ deterministic_card_game 6 -qq -e -t=1
