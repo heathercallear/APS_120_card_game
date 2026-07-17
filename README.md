@@ -41,17 +41,60 @@ The aim of the game is to have no cards remaining in the hand.
 
 ## Basic Usage
 
-The following requires the `matplotlib` module to be installed.
+### Data generation
+
+Data has already been generated and saved in the [card_game_data](/card_game_data/) folder,
+so if you just want to see graphs, feel free to skip to the next section.
+
+Any new data generated is saved as a new CSV file in this same folder.
+
+The code can either be run directly from an executable,
+or by installing [Rust](https://rust-lang.org/) and
+using `cargo run --release -- ` from within this repository's folder.
+
+To generate data for $`10^m`$ played games, run:
+
+```bash
+$ deterministic_card_game -s m
+```
+
+For example, to generate data for 10,000,000 (10^7) runs:
+
+```bash
+$ deterministic_card_game -s 7
+```
+
+Or, equivalently, if running from within this repository after installing Rust:
+
+```bash
+$ cargo run --release -- -s 7
+```
+
+For more details, see the
+[Usage of the data generation code](#usage-of-the-data-generation-code)
+section.
+
+### Graph plotting
+
+The graph plotting code requires [Python](https://www.python.org/) to be installed.
+It also requires the [`matplotlib`](https://matplotlib.org/stable/index.html) module to be installed.
+`matplotlib` can be installed using python's pip module.
 
 ```bash
 $ pip install matplotlib
 ```
+
+Plots a log-log graph showing the convergence of the proportion of games that
+end with a certain number of cards in the hand
 
 The final value reached after all the runs is used as an estimate of the true probability
 of finishing a game with a certain number of cards in the hand.
 
 The convergence of the proportion of games ending with this certain number of cards in the hand
 can be shown using a log-log plot of its difference from the estimate against the number of runs.
+
+For more details on how the graph is plotted, see the
+[How the graph is plotted](#how-the-graph-is-plotted) section.
 
 Use `plot_data.py` to view such a log-log plot.
 The graph will open in a new window.
@@ -67,7 +110,8 @@ Or to show a plot for the games that were won (ended with no cards left in the h
 $ python plot_data.py 0
 ```
 
-To compare this convergence for won games to the appealing (and very close) value of 1/100sqrt(2),
+To compare this convergence for won games to the appealing (and very close) value of
+$`\frac{1}{100\sqrt{2}}`$ (a tentative value suggested during the podcast episode),
 simply run `plot_data.py` with no arguments:
 
 ```bash
@@ -75,6 +119,75 @@ $ python plot_data.py
 ```
 
 ![Log-log plot comparing convergence of the proportion of won games to its final result versus to 1/100sqrt(2). Until about 10^6 to 10^8 runs, both plots look very similar, steadily (if jaggedly) decreasing. After this, the convergence to 1/100sqrt(2) stays at about 10^-5 difference from the data. However, the convergence to the final result continues to jaggedly decrease down to roughly 10^-7.5 difference from the data after 10^12 runs.](/img/run-00017-plot-__-cards-left.svg)
+
+The difference between $`\frac{1}{100\sqrt{2}}`$ and the final value eventually flattens off at about 10^-5.
+This shows that the proportion of won games does not converge to $`\frac{1}{100\sqrt{2}}`$,
+but instead to a number that is about 10^-5 different from it.
+
+This particular plot also shows how the precision of the final estimate is indicated.
+Up until 10^7 runs, both estimates were steadily being converged to,
+and were roughly as accurate as each other.
+After this, when the precision of the estimate from run data exceeded 10^-5,
+the difference between $`\frac{1}{100\sqrt{2}}`$ and the true proportion of games won became apparent.
+
+Similarly, the final result of 7.06314e-03 can be judged to have a precision of about ±10^-7,
+so should perhaps be written as 7.0631e-03 or 0.070631%.
+
+## How the graph is plotted
+
+A single graph only shows results for finishing the game with a certain number of cards, $`k`$, in the hand.
+It shows how the estimated probability of a such a game changes as the number of games played increases.
+The estimated probability is calculated as the number of games played that ended
+with $`k`$ cards left in the hand divided by the total number of games played.
+
+```math
+\text{estimated probability of a game ending in }k\text{ cards after }n\text{ runs} =
+p(k, n) =
+\frac
+    {\text{number of games that ended in }k\text{ cards}}
+    {\text{number of games played (}n\text{)}}
+```
+
+The final estimated probability, $`p(k, n_{max})`$, is the estimated probability after all the games have been played.
+The convergence (or lack of it) of the estimated probability to its final value can be seen by
+plotting the difference between them.
+
+```math
+\text{difference} = d(k, n) = \lvert p(k, n) - p(k, n_{max}) \rvert
+```
+
+The graph is a log-log plot of $`d(k, n)`$ against $`n`$ for all recorded $`n`$ except for $`n_{max}`$.
+$`n_{max}`$ is not included because showing how close a value is to itself is not useful.
+
+A log scale is used for $`d(k, n)`$ because it starts out large (around the size of the final estimate) and
+ends very small (orders of magnitude smaller),
+so on a linear scale the difference after many runs would be indistinguishable from 0.
+
+A log scale is also used for $`n`$ because the number of runs used to generate early estimates
+is orders of magnitude smaller than the final number of runs,
+so on a linear scale early estimates would all be squished against the y axis.
+
+The graph is intended to show the convergence (or lack of it) to a particular value
+of the estimated probability of finishing the game with a certain number of cards in the hand
+as the number of games played to generate that estimate increases.
+
+By default, the data read from the CSV file in [card_game_data](/card_game_data/) with:
+- the highest number of runs
+- the most splits (if number of runs is equal)
+- the most recent run (if all else is equal)
+
+For the data in this repository, data from
+[run number 17 with 10^12 runs](/card_game_data/run-00017-exp-12-splits-90.csv)
+is used by default.
+
+The `--run-number` or `-r` option can be used to specify which CSV file should be read from.
+For example, the data from
+[run number 10 with 10^11 runs](/card_game_data/run-00010-exp-11-splits-9.csv)
+could be specified as follows:
+
+```bash
+$ python plot_data.py -r=10
+```
 
 ## Usage of the data generation code
 
