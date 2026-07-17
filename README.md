@@ -49,7 +49,7 @@ so if you just want to see graphs, feel free to skip to the next section.
 Any new data generated is saved as a new CSV file in this same folder.
 
 The code can either be run directly from an executable
-(see [the latest release](/releases/latest)),
+(see [the latest release](https://github.com/heathercallear/APS_120_card_game/releases/latest)),
 or by installing [Rust](https://rust-lang.org/) and
 using `cargo run --release -- ` from within this repository's folder.
 
