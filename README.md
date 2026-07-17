@@ -74,7 +74,7 @@ simply run `plot_data.py` with no arguments:
 $ python plot_data.py
 ```
 
-![Log-log plot comparing convergence of the proportion of won games to its final result versus to 1/100sqrt(2). Until about 10^6 to 10^8 runs, both plots look very similar, steadily (if jaggedly) decreasing. After this, the convergence to 1/100sqrt(2) stays at about 10^-5 difference from the data. However, the convergence to the final result continues to jaggedly decrease down to roughly 10^-6.5 difference from the data.](/img/run-00010-plot-__-cards-left.svg)
+![Log-log plot comparing convergence of the proportion of won games to its final result versus to 1/100sqrt(2). Until about 10^6 to 10^8 runs, both plots look very similar, steadily (if jaggedly) decreasing. After this, the convergence to 1/100sqrt(2) stays at about 10^-5 difference from the data. However, the convergence to the final result continues to jaggedly decrease down to roughly 10^-7.5 difference from the data after 10^12 runs.](/img/run-00017-plot-__-cards-left.svg)
 
 ## Usage of the data generation code
 
