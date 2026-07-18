@@ -62,6 +62,7 @@ class DataPlotter:
             )
             for line in lines_split
         }
+        self.max_runs = max(self.data.keys())
         self.float_data = {
             runs: tuple(
                 result / runs
@@ -69,15 +70,14 @@ class DataPlotter:
             )
             for runs, results in self.data.items()
         }
-        float_data_items = tuple(self.float_data.items())
-        # get the value of the last item
-        final_float_results = float_data_items[-1][1]
+        final_float_results = self.float_data[self.max_runs]
         self.log_difference_data = {
             runs: tuple(
                 log10(abs(result - final_result)) if final_result != 0 else 0
                 for result, final_result in zip(results, final_float_results)
             )
-            for runs, results in float_data_items[:-1]
+            for runs, results in self.float_data.items()
+            if runs != self.max_runs
         }
 
     def plot_data(
@@ -87,7 +87,7 @@ class DataPlotter:
     ) -> None:
         if not 0 <= cards_left_in_hand <= 52:
             raise ValueError(f'Can only have 0–52 cards left in the hand, not {cards_left_in_hand}')
-        final_result = tuple(self.float_data.values())[-1][cards_left_in_hand]
+        final_result = self.float_data[self.max_runs][cards_left_in_hand]
         plt.plot(
             tuple(
                 log10(runs)
@@ -139,12 +139,10 @@ class DataPlotter:
 
     def plot_bar(self, log: bool = False) -> None:
         x = tuple(range(0, 53, 2))
-        final_estimates = list(tuple(self.float_data.values())[-1])
+        final_estimates = list(self.float_data[self.max_runs])
         if log:
             for i, final_estimate in enumerate(final_estimates):
-                if final_estimate == 0:
-                    pass
-                else:
+                if final_estimate != 0:
                     final_estimates[i] = log10(final_estimate)
         heights = tuple(
             final_estimates[i]
