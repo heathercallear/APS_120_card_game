@@ -2,6 +2,7 @@ from argparse import ArgumentParser
 from math import log10, sqrt
 from pathlib import Path
 from re import compile as re_compile
+from typing import Literal
 
 import matplotlib.pyplot as plt
 
@@ -12,13 +13,20 @@ class DataPlotter:
 
     def __init__(self, run_number: None | int = None, dark: bool = False) -> None:
         self.run_number = run_number
-        if dark:
-            self.color = 'w'
-            self.other_color = 'red'
-        else:
-            self.color = 'k'
-            self.other_color = 'darkred'
+        self.dark = dark
         self.read_data()
+
+    @property
+    def color(self) -> Literal['w', 'k']:
+        if self.dark:
+            return 'w'
+        return 'k'
+
+    @property
+    def other_color(self) -> Literal['red', 'darkred']:
+        if self.dark:
+            return 'red'
+        return 'darkred'
 
     def file_sorter(self, file: Path) -> tuple[int | float, int, int]:
         regex_match = self.FILE_REGEX.match(file.name)
